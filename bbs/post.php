@@ -19,12 +19,16 @@ $array = [
     "ip" => $_SERVER['REMOTE_ADDR']
 ];
 
-$bool = save_text($array["id"]);
-if($bool){
-    add_log($array);
-    header('Location: ../index.php');
-} else {
+if(mb_strlen($array["user"], "UTF-8") > 50){
     header('Location: error.php?code=1');
+} else {
+    $bool = save_text($array["id"]);
+    if($bool){
+        add_log($array);
+        header('Location: ../index.php');
+    } else {
+        header('Location: error.php?code=2');
+    }
 }
 
 function h($s) {

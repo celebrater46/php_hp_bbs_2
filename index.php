@@ -2,9 +2,12 @@
 
 // Copyright (C) Enin Fujimi All Rights Reserved.
 
-require_once "bbs/Comment.php";
+namespace php_hp_bbs;
 
-$title = "PHP HP BBS";
+require_once "bbs/Comment.php";
+require_once "init.php";
+
+//$title = "PHP HP BBS";
 
 $list = file("bbs/list.txt");
 $comments = get_comments($list);
