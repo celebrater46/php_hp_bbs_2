@@ -10,7 +10,6 @@ require_once ( dirname(__FILE__) . '/../' . PHBBS_PIA_PATH . 'securimage/securim
 date_default_timezone_set('Asia/Tokyo');
 
 $name_full = h($_POST["name"]);
-//$setting = get_setting();
 
 // 12|11|2007/06/13(Wed) 00:23:15|1181661795|名も無き投稿者|無題|7I7Cj53d7YIoI|https://google.com/|hoge123@google.com|192.168.1.100|53|0
 $array = [
@@ -46,7 +45,6 @@ function save_text($id){
     $securimage = new Securimage();
     if(isset($_POST['captcha_code'])) {
         if($securimage->check($_POST['captcha_code']) === true) {
-//            echo 'Authorized.';
             $text = h($_POST["text"]);
             $path = "comments/" . $id . ".txt";
             $len = mb_strlen($text, "UTF-8");
@@ -59,14 +57,9 @@ function save_text($id){
         } else {
             header('Location: error.php?code=3');
             exit;
-//            echo 'エラー：認証用の英数字が正しくありません。';
         }
     }
 }
-
-//function check_strlen($text){
-//    $len = mb_strlen($text, "UTF-8");
-//}
 
 function add_log($array){
     $path = "list.txt";
@@ -110,13 +103,3 @@ function get_id(){
     rsort($array);
     return $array[0] + 1;
 }
-
-//function get_setting(){
-//    $settings = file("../setting.txt");
-//    $txt_mode = str_replace([" ", "\n", "\r", "\r\n"], "", $settings[3]);
-//    if($txt_mode !== "true"){
-//        return false;
-//    } else {
-//        return true;
-//    }
-//}

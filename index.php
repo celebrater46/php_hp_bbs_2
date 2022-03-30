@@ -8,20 +8,6 @@ require_once "init.php";
 require_once "bbs/Comment.php";
 require_once "phbbs_get_html.php";
 
-//$title = "PHP HP BBS";
-
-//$list = file("bbs/list.txt");
-//$comments = get_comments($list);
-//rsort($comments); // 新しい投稿順
-
-//function get_comments($list){
-//    $array = [];
-//    foreach ($list as $line){
-//        array_push($array, new Comment($line));
-//    }
-//    return $array;
-//}
-
 ?>
 
 <!DOCTYPE html>
@@ -39,16 +25,6 @@ require_once "phbbs_get_html.php";
         <p>名前の後に #（半角シャープ）を追加し、任意の文字列を入れると、</p>
         <p>なりすまし防止用の暗号キーが追加されます（2ch でいう「トリ」です）。</p>
         <?php echo phbbs_get_html(); ?>
-
-        <div class="phbbs_comment">
-            <hr>
-            <p>1: <span class="phbbs_name">通りすがりの名無しさん</span> 2022/1/24 15:16:34 ID:yjLxrzJFriH9s [返信]</p>
-            <h2>タイトル</h2>
-            <div>
-                1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。1 番目の投稿です。
-            </div>
-        </div>
     </div>
-
 </body>
 </html>
