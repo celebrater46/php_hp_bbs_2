@@ -1,5 +1,7 @@
 <?php
 
+namespace php_hp_bbs\bbs;
+
 class Comment
 {
     public $id;

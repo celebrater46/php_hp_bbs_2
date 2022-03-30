@@ -1,5 +1,7 @@
 <?php
 
+namespace php_hp_bbs;
+
 $code = isset($_GET["code"]) ? (int)$_GET["code"] : 0;
 
 ?>

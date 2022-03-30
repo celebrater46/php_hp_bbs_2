@@ -43,19 +43,19 @@ div.containter{
     text-align: left;
 }
 
-div.comment{
+div.phbbs_comment{
     margin: 50px auto 20px;
 }
 
-div.text{
+div.phbbs_text{
     margin: 20px auto;
 }
 
-div.form_box{
+div.phbbs_form_box{
     margin: 50px auto;
 }
 
-div.form{
+div.phbbs_form{
     margin: 20px auto;
 }
 
@@ -63,21 +63,21 @@ label{
     display: flex;
 }
 
-span.form{
+span.phbbs_form{
     display: block;
     width: 130px;
 }
 
-span.name{
+span.phbbs_name{
     font-weight: bold;
     color: goldenrod;
 }
 
-input.comment{
+input.phbbs_comment{
     width: 720px;
 }
 
-textarea.comment{
+textarea.phbbs_comment{
     width: 720px;
     height: 500px;
 }

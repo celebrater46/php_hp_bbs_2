@@ -1,5 +1,7 @@
 <?php
 
+namespace php_hp_bbs\bbs;
+
 date_default_timezone_set('Asia/Tokyo');
 
 $name_full = h($_POST["name"]);
