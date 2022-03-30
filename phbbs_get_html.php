@@ -4,10 +4,13 @@ namespace php_hp_bbs;
 
 use php_img_auth\modules as modules;
 use php_hp_bbs\bbs\Comment;
+use php_img_auth as pia;
 
 require_once "init.php";
 require_once "bbs/Comment.php";
 require_once PHBBS_HTML_COMMON_MODULE . "html_common_module.php";
+require_once PHBBS_PIA_PATH . "init.php";
+require_once PHBBS_PIA_PATH . "pia_get_html.php";
 
 function get_list(){
     $txt = PHBBS_PATH . "bbs/list.txt";
@@ -65,16 +68,17 @@ function phbbs_get_form_html(){
     $html .= modules\space_br('<div class="phbbs_form">', 3);
     $html .= modules\space_br('<label>', 4);
     $html .= modules\space_br('<span class="phbbs_form">名前：</span>', 5);
+    $html .= modules\space_br('</label><br>', 4);
     $html .= modules\space_br('<input class="phbbs_comment" type="text" name="name">', 5);
-    $html .= modules\space_br('</label>', 4);
     $html .= modules\space_br('</div>', 3);
     $html .= modules\space_br('<div class="phbbs_form">', 3);
     $html .= modules\space_br('<label>', 4);
     $html .= modules\space_br('<span class="phbbs_form">内容：</span>', 5);
+    $html .= modules\space_br('</label><br>', 4);
     $html .= modules\space_br('<textarea class="phbbs_comment" name="text"></textarea>', 5);
-    $html .= modules\space_br('</label>', 4);
     $html .= modules\space_br('</div>', 3);
-    $html .= modules\space_br('<div class="phbbs_form"><button class="submit">送信！</button></div>', 3);
+    $html .= pia\pia_get_html(false, 0);
+    $html .= modules\space_br('<div class="phbbs_form"><button class="submit">投稿する</button></div>', 3);
     $html .= modules\space_br('</form>', 2);
     $html .= modules\space_br('</div>', 1);
     return $html;
@@ -83,5 +87,6 @@ function phbbs_get_form_html(){
 function phbbs_get_html(){
     $html = phbbs_get_form_html();
     $html .= phbbs_get_comments_html();
+    $html .= modules\space_br('<script src="' . PHBBS_PIA_PATH . 'main.js"></script>', 1);
     return $html;
 }

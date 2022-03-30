@@ -18,13 +18,17 @@ $code = isset($_GET["code"]) ? (int)$_GET["code"] : 0;
     <div class="containter">
         <h1>ERROR</h1>
         <?php switch ($code) : case 1 : ?>
-                <p>投稿者名は 50 文字以内に収めてください。</p>
-                <p>Cannot post a text over 50 characters.</p>
-                <?php break; ?>
-            <?php case 2: ?>
-                <p>投稿できる文字数は最大で 2000 文字までです。</p>
-                <p>Cannot post a text over 2000 characters.</p>
-                <?php break; ?>
+            <p>投稿者名は 50 文字以内に収めてください。</p>
+            <p>Cannot post a text over 50 characters.</p>
+            <?php break; ?>
+        <?php case 2: ?>
+            <p>投稿できる文字数は最大で 2000 文字までです。</p>
+            <p>Cannot post a text over 2000 characters.</p>
+            <?php break; ?>
+        <?php case 3: ?>
+            <p>認証用の英数字が正しくありません。</p>
+            <p>Authentication failed because the code you typed was wrong.</p>
+            <?php break; ?>
         <?php default: ?>
             <p>不明なエラーが発生しました！</p>
             <p>Unknown error occurred!</p>

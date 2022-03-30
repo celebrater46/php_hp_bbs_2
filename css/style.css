@@ -85,7 +85,14 @@ textarea.phbbs_comment{
 button.submit{
     color: #eeeeee;
     background-color: #333333;
-    width: 200px;
-    text-align: center;
-    margin: 0 auto 0 390px;
+    /*width: 200px;*/
+    text-align: left;
+    margin: 0 auto;
+}
+
+button#pia_regenerate{
+    color: #eeeeee;
+    background-color: #333333;
+    text-align: left;
+    margin: 0 auto;
 }
