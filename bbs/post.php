@@ -13,7 +13,7 @@ $name_full = h($_POST["name"]);
 
 $thread = h($_POST["thread_name"]);
 
-// 12|11|2007/06/13(Wed) 00:23:15|1181661795|名も無き投稿者|無題|7I7Cj53d7YIoI|https://google.com/|hoge123@google.com|192.168.1.100|53|0
+// 12<>11<>2007/06/13(Wed) 00:23:15<>1181661795<>名も無き投稿者<>無題<>7I7Cj53d7YIoI<>https://google.com/<>hoge123@google.com<>192.168.1.100|53<>0
 $posted = [
     "id" => get_id($thread),
     "reply" => isset($_POST["reply"]) ? (int)$_POST["reply"] : 0,
@@ -80,7 +80,7 @@ function check_auth($posted, $thread){
 
 function add_log($posted, $thread){
     $path = "threads/" . $thread . "/list.txt";
-    $line = implode("|", $posted) . "|0";
+    $line = implode("|", $posted) . "<>0";
     error_log($line . "\n", 3, $path);
 }
 
@@ -114,7 +114,7 @@ function get_id($thread){
     $list = file("threads/" . $thread . "/list.txt");
     $array = [];
     foreach ($list as $line){
-        $temp = explode("|", $line);
+        $temp = explode("<>", $line);
         array_push($array, (int)$temp[0]);
     }
     rsort($array);
