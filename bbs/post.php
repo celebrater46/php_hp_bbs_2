@@ -80,7 +80,7 @@ function check_auth($posted, $thread){
 
 function add_log($posted, $thread){
     $path = "threads/" . $thread . "/list.txt";
-    $line = implode("|", $posted) . "<>0";
+    $line = implode("<>", $posted) . "<>0";
     error_log($line . "\n", 3, $path);
 }
 

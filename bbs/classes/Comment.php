@@ -19,10 +19,10 @@ class Comment
     public $ip; // 投稿者の IP アドレス
 
     function __construct($line, $thread){
-//        12|11|2007/06/13(Wed) 00:23:15|1181661795|名も無き投稿者|無題|7I7Cj53d7YIoI|https://google.com/|hoge123@google.com|192.168.1.100|53|0
-//        $id|$reply|$date|$date_unix|$sender|$title|$text|$cap|$hp|$mail|$ip|0（改行コードによるバグ対策）
+//        12<>11<>2007/06/13(Wed) 00:23:15<>1181661795<>名も無き投稿者<>無題<>7I7Cj53d7YIoI<>https://google.com/<>hoge123@google.com<>192.168.1.100|53<>0
+//        $id<>$reply<>$date<>$date_unix<>$sender<>$title<>$text<>$cap<>$hp<>$mail<>$ip<>0（改行コードによるバグ対策）
         $this->thread = $thread;
-        $list_data = explode("|", $line);
+        $list_data = explode("<>", $line);
         $this->id = (int)$list_data[0];
         $this->reply = (int)$list_data[1];
         $this->date = $list_data[2];
