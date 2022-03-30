@@ -11,9 +11,11 @@ date_default_timezone_set('Asia/Tokyo');
 
 $name_full = h($_POST["name"]);
 
+$thread = h($_POST["thread_name"]);
+
 // 12|11|2007/06/13(Wed) 00:23:15|1181661795|名も無き投稿者|無題|7I7Cj53d7YIoI|https://google.com/|hoge123@google.com|192.168.1.100|53|0
 $posted = [
-    "id" => get_id(),
+    "id" => get_id($thread),
     "reply" => isset($_POST["reply"]) ? (int)$_POST["reply"] : 0,
     "date" =>  date("Y-m-d_H:i:s"), // 2021-01-12 09:45:31
     "date_unix" => time(),
@@ -22,42 +24,53 @@ $posted = [
     "cap" => get_cap($name_full),
     "hp" => "",
     "mail" => "",
-    "ip" => $_SERVER['REMOTE_ADDR'],
-    "thread_name" => h($_POST["thread_name"])
+    "ip" => $_SERVER['REMOTE_ADDR']
 ];
 
 if(mb_strlen($posted["user"], "UTF-8") > 50){
     header('Location: error.php?code=1');
 } else {
-    $bool = save_text($posted);
-    if($bool){
-        add_log($posted);
-        header('Location: ../index.php');
-    } else {
-        header('Location: error.php?code=2');
-    }
+    check_auth($posted, $thread);
+//    $bool = save_text($posted, $thread);
+//    if($bool){
+//        add_log($posted, $thread);
+//        header('Location: ../index.php');
+//    } else {
+//        header('Location: error.php?code=2');
+//    }
 }
 
 function h($s) {
     return htmlspecialchars($s, ENT_QUOTES, "UTF-8");
 }
 
-function save_text($posted){
+function save_text($posted, $thread){
+    $text = h($_POST["text"]);
+    $path = "threads/" . $thread . "/comments/" . $posted["id"] . ".txt";
+    $len = mb_strlen($text, "UTF-8");
+    if($len <= 2000){
+        error_log($text, 3, $path);
+        add_log($posted, $thread);
+        header('Location: ../index.php');
+        exit;
+//        return true;
+    } else {
+//        return false;
+        header('Location: error.php?code=2');
+        exit;
+    }
+}
+
+function check_auth($posted, $thread){
     $securimage = new Securimage();
     if(PHBBS_AVAILABLE === false){
         header('Location: error.php?code=4');
         exit;
+    } else if(PHBBS_AUTH === false){
+        save_text($posted, $thread);
     } else if(isset($_POST['captcha_code'])) {
         if($securimage->check($_POST['captcha_code']) === true) {
-            $text = h($_POST["text"]);
-            $path = "threads/" . $posted["thread"] . "/" . $posted["id"] . ".txt";
-            $len = mb_strlen($text, "UTF-8");
-            if($len <= 2000){
-                error_log($text, 3, $path);
-                return true;
-            } else {
-                return false;
-            }
+            save_text($posted, $thread);
         } else {
             header('Location: error.php?code=3');
             exit;
@@ -65,9 +78,9 @@ function save_text($posted){
     }
 }
 
-function add_log($array){
-    $path = "list.txt";
-    $line = implode("|", $array) . "|0";
+function add_log($posted, $thread){
+    $path = "threads/" . $thread . "/list.txt";
+    $line = implode("|", $posted) . "|0";
     error_log($line . "\n", 3, $path);
 }
 
@@ -97,8 +110,8 @@ function get_cap($name){
     return $cap;
 }
 
-function get_id(){
-    $list = file("list.txt");
+function get_id($thread){
+    $list = file("threads/" . $thread . "/list.txt");
     $array = [];
     foreach ($list as $line){
         $temp = explode("|", $line);

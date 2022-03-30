@@ -88,7 +88,9 @@ function phbbs_get_form_html($thread){
     $html .= modules\space_br('</label><br>', 4);
     $html .= modules\space_br('<textarea class="phbbs_comment" name="text"></textarea>', 5);
     $html .= modules\space_br('</div>', 3);
-    $html .= pia\pia_get_html(false, 0);
+    if(PHBBS_AUTH){
+        $html .= pia\pia_get_html(false, 0);
+    }
     $html .= modules\space_br('<input type="hidden" name="thread_name" value="' . $thread . '">', 3);
     $html .= modules\space_br('<div class="phbbs_form"><button class="submit">投稿する</button></div>', 3);
     $html .= modules\space_br('</form>', 2);
