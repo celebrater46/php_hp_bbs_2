@@ -1,6 +1,6 @@
 <?php
 
-namespace php_hp_bbs\bbs;
+namespace php_hp_bbs\bbs\classes;
 
 class Comment
 {

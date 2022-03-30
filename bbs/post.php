@@ -43,7 +43,10 @@ function h($s) {
 
 function save_text($id){
     $securimage = new Securimage();
-    if(isset($_POST['captcha_code'])) {
+    if(PHBBS_AVAILABLE === false){
+        header('Location: error.php?code=4');
+        exit;
+    } else if(isset($_POST['captcha_code'])) {
         if($securimage->check($_POST['captcha_code']) === true) {
             $text = h($_POST["text"]);
             $path = "comments/" . $id . ".txt";

@@ -3,14 +3,19 @@
 namespace php_hp_bbs;
 
 use php_img_auth\modules as modules;
-use php_hp_bbs\bbs\Comment;
+use php_hp_bbs\bbs\classes\Comment;
 use php_img_auth as pia;
 
+use php_number_link_generator\classes\NumberLink;
+
 require_once "init.php";
-require_once "bbs/Comment.php";
+require_once "bbs/classes/Comment.php";
 require_once PHBBS_HTML_COMMON_MODULE . "html_common_module.php";
 require_once PHBBS_PIA_PATH . "init.php";
 require_once PHBBS_PIA_PATH . "pia_get_html.php";
+
+require_once( dirname(__FILE__) . '/../' . PHBBS_PNLG_PATH . 'init.php');
+require_once( dirname(__FILE__) . '/../' . PHBBS_PNLG_PATH . 'classes/NumberLink.php');
 
 function get_list(){
     $txt = PHBBS_PATH . "bbs/list.txt";
@@ -54,10 +59,16 @@ function get_comment($comment){
 function phbbs_get_comments_html(){
     $list = get_list();
     $comments = get_comments($list);
+    $comments_num = count($comments);
+    $link = new NumberLink($comments_num);
     rsort($comments); // reverse the order of the list
     $html = "";
     foreach ($comments as $comment){
         $html .= get_comment($comment);
+    }
+    if(PHBBS_MAX_COMMENTS < $comments_num){
+        $parameters = "";
+        $html .= $link->get_page_links_html($parameters);
     }
     return $html;
 }

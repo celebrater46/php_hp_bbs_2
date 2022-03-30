@@ -29,6 +29,10 @@ $code = isset($_GET["code"]) ? (int)$_GET["code"] : 0;
             <p>認証用の英数字が正しくありません。</p>
             <p>Authentication failed because the code you typed was wrong.</p>
             <?php break; ?>
+        <?php case 4: ?>
+            <p>ただいま投稿が一時的に制限されています。</p>
+            <p>Post failed because of the administrator's inconvenience.</p>
+            <?php break; ?>
         <?php default: ?>
             <p>不明なエラーが発生しました！</p>
             <p>Unknown error occurred!</p>

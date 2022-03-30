@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/plugins/php_img_auth" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/plugins/php_number_link_generator_2" vcs="Git" />
   </component>
 </project>
