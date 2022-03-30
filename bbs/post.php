@@ -12,7 +12,7 @@ date_default_timezone_set('Asia/Tokyo');
 $name_full = h($_POST["name"]);
 
 // 12|11|2007/06/13(Wed) 00:23:15|1181661795|名も無き投稿者|無題|7I7Cj53d7YIoI|https://google.com/|hoge123@google.com|192.168.1.100|53|0
-$array = [
+$posted = [
     "id" => get_id(),
     "reply" => isset($_POST["reply"]) ? (int)$_POST["reply"] : 0,
     "date" =>  date("Y-m-d_H:i:s"), // 2021-01-12 09:45:31
@@ -22,15 +22,16 @@ $array = [
     "cap" => get_cap($name_full),
     "hp" => "",
     "mail" => "",
-    "ip" => $_SERVER['REMOTE_ADDR']
+    "ip" => $_SERVER['REMOTE_ADDR'],
+    "thread_name" => h($_POST["thread_name"])
 ];
 
-if(mb_strlen($array["user"], "UTF-8") > 50){
+if(mb_strlen($posted["user"], "UTF-8") > 50){
     header('Location: error.php?code=1');
 } else {
-    $bool = save_text($array["id"]);
+    $bool = save_text($posted);
     if($bool){
-        add_log($array);
+        add_log($posted);
         header('Location: ../index.php');
     } else {
         header('Location: error.php?code=2');
@@ -41,7 +42,7 @@ function h($s) {
     return htmlspecialchars($s, ENT_QUOTES, "UTF-8");
 }
 
-function save_text($id){
+function save_text($posted){
     $securimage = new Securimage();
     if(PHBBS_AVAILABLE === false){
         header('Location: error.php?code=4');
@@ -49,7 +50,7 @@ function save_text($id){
     } else if(isset($_POST['captcha_code'])) {
         if($securimage->check($_POST['captcha_code']) === true) {
             $text = h($_POST["text"]);
-            $path = "comments/" . $id . ".txt";
+            $path = "threads/" . $posted["thread"] . "/" . $posted["id"] . ".txt";
             $len = mb_strlen($text, "UTF-8");
             if($len <= 2000){
                 error_log($text, 3, $path);

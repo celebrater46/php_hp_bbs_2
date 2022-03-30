@@ -5,7 +5,7 @@
 namespace php_hp_bbs;
 
 require_once "init.php";
-require_once "bbs/Comment.php";
+require_once "bbs/classes/Comment.php";
 require_once "phbbs_get_html.php";
 
 ?>
@@ -24,7 +24,7 @@ require_once "phbbs_get_html.php";
         <p>作品の感想、アプリやゲームのバグ報告等あったらください。</p>
         <p>名前の後に #（半角シャープ）を追加し、任意の文字列を入れると、</p>
         <p>なりすまし防止用の暗号キーが追加されます（2ch でいう「トリ」です）。</p>
-        <?php echo phbbs_get_html(); ?>
+        <?php echo phbbs_get_html("test2"); ?>
     </div>
 </body>
 </html>

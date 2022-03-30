@@ -11,7 +11,7 @@ foreach ($log as $line){
     $replaced = str_replace("麻呂", "永人", $line);
     $replaced = str_replace("仲川", "富士見", $replaced);
     $temp = explode("<>", $replaced);
-    $txt = "comments/" . $temp[0] . ".txt";
+    $txt = "threads/" . $temp[0] . ".txt";
     error_log(
         $temp[0] . "|" .
         $temp[1] . "|" .
