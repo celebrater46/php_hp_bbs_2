@@ -11,5 +11,5 @@ define('PHBBS_AVAILABLE', false); // 投稿許可（false で投稿を一時的�
 //define('PHBBS_REPLY_MODE', false); // true でリプライ先のコメントの直下に返事を表示
 define('PHBBS_MAX_COMMENTS', 10); // 1ページあたりのコメント表示数
 define("PHBBS_PIA_PATH", 'plugins/php_img_auth/'); // php_img_auth
-define("PHBBS_PNLG_PATH", 'plugins/php_number_link_generator_2/'); // php_number_link_generator
-define("PHBBS_HTML_COMMON_MODULE", 'plugins/php_img_auth/modules/');
+define("PHBBS_PNLG_PATH", '../common_modules/php_number_link_generator_2/'); // php_number_link_generator
+define("PHBBS_HCM_PATH", '../common_modules/html_common_module.php'); // html_common_module.php

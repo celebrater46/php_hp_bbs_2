@@ -10,7 +10,7 @@ use php_number_link_generator\classes\NumberLink;
 
 require_once "init.php";
 require_once "bbs/classes/Comment.php";
-require_once PHBBS_HTML_COMMON_MODULE . "html_common_module.php";
+require_once PHBBS_HCM_PATH;
 require_once PHBBS_PIA_PATH . "init.php";
 require_once PHBBS_PIA_PATH . "pia_get_html.php";
 
