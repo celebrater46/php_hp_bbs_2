@@ -31,13 +31,13 @@ function check_posted_data($posted){
     if(mb_strlen($posted->user, "UTF-8") > 50){
         header('Location: error.php?code=1');
         exit;
-    } else if($posted->len < 2000){
+    } else if($posted->len > 2000){
         header('Location: error.php?code=2');
         exit;
     } else if(preg_match('/[!#<>:;&~@%+$"\'\*\^\(\)\[\]\|\/\.,_-]+/', $_POST["password"])){
         header('Location: error.php?code=5');
         exit;
-    } else if(check_password($_POST["password"]) === false){
+    } else if($_POST["password"] !== "" && check_password($_POST["password"]) === false){
         header('Location: error.php?code=6');
         exit;
     }

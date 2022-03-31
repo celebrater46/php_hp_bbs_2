@@ -27,7 +27,7 @@ class PostComment extends Comment
         $this->hp = "";
         $this->mail = "";
         $this->ip = $_SERVER['REMOTE_ADDR'];
-        $this->password = cm\h($_POST["thread_name"]);
+        $this->password = cm\h($_POST["password"]);
     }
 
     function get_line(){
@@ -42,7 +42,8 @@ class PostComment extends Comment
             "cap" => $this->cap,
             "hp" => $this->hp,
             "mail" => $this->mail,
-            "ip" => $this->ip
+            "ip" => $this->ip,
+            "password" => $this->password
         ];
     }
 

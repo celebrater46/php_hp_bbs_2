@@ -91,6 +91,12 @@ p.password{
     margin: 5px auto;
 }
 
+p.pnlg_links{
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid gray;
+}
+
 button.submit{
     color: #eeeeee;
     background-color: #333333;

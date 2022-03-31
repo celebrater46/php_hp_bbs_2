@@ -45,6 +45,7 @@ function phbbs_get_comments_html($thread, $state){
     }
     if(PHBBS_MAX_COMMENTS < $comments_num){
         $parameters = "";
+//        $html .= cm\space_br('<p class="number_link">', )
         $html .= $link->get_page_links_html($parameters);
     }
     return $html;
@@ -128,7 +129,9 @@ function phbbs_get_form_html($thread, $state){
     $html .= cm\space_br('<span class="phbbs_form">パスワード：</span>', 5);
     $html .= cm\space_br('</label>', 4);
     $html .= cm\space_br('<input class="phbbs_password" type="password" name="password">', 5);
-    $html .= cm\space_br('<p class="password">※パスワードを設定しておくと、後から削除できるようになります。</p>', 5);
+    if($state->edit !== null && $state->delete !== null){
+        $html .= cm\space_br('<p class="password">※パスワードを設定しておくと、後から削除できるようになります。</p>', 5);
+    }
     $html .= cm\space_br('</div>', 3);
     if(PHBBS_AUTH){
         $html .= pia\pia_get_html(false, 0);
