@@ -4,12 +4,14 @@ namespace php_hp_bbs;
 
 use php_img_auth\modules as modules;
 use php_hp_bbs\bbs\classes\GetComment;
+use php_hp_bbs\bbs\classes\State;
 use php_img_auth as pia;
 
 use php_number_link_generator\classes\NumberLink;
 
 require_once "init.php";
 require_once "bbs/classes/GetComment.php";
+require_once "bbs/classes/State.php";
 require_once PHBBS_HCM_PATH;
 require_once PHBBS_PIA_PATH . "init.php";
 require_once PHBBS_PIA_PATH . "pia_get_html.php";
@@ -36,6 +38,7 @@ function get_comments($list, $thread){
 }
 
 function get_comment($comment){
+//    var_dump($comment);
     $html = modules\space_br('<div class="phbbs_comment">', 2);
     $html .= modules\space_br('<hr>', 3);
     $html .= modules\space_br('<p>', 3);
@@ -60,12 +63,20 @@ function phbbs_get_comments_html($thread){
     $list = get_list($thread);
     $comments = get_comments($list, $thread);
     $comments_num = count($comments);
-    $link = new NumberLink($comments_num);
+    $link = new NumberLink($comments_num, PHBBS_MAX_COMMENTS);
     rsort($comments); // reverse the order of the list
     $html = "";
-    foreach ($comments as $comment){
-        $html .= get_comment($comment);
+    $state = new State();
+    $start_comment = ($state->page - 1) * PHBBS_MAX_COMMENTS;
+    $end_comment = $state->page * PHBBS_MAX_COMMENTS;
+    for($i = $start_comment; $i < $end_comment; $i++){
+        if(isset($comments[$i])){
+            $html .= get_comment($comments[$i]);
+        }
     }
+//    foreach ($comments as $comment){
+//        $html .= get_comment($comment);
+//    }
     if(PHBBS_MAX_COMMENTS < $comments_num){
         $parameters = "";
         $html .= $link->get_page_links_html($parameters);
