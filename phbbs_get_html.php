@@ -18,7 +18,7 @@ require_once( PHBBS_PNLG_PATH . 'init.php');
 require_once( PHBBS_PNLG_PATH . 'classes/NumberLink.php');
 
 function get_list($thread){
-    $txt = PHBBS_PATH . "bbs/threads/" . $thread . "/list.txt";
+    $txt = PHBBS_PATH . "bbs/lists/" . $thread . ".log";
     if(file_exists($txt)){
         return file($txt);
     } else {
@@ -79,19 +79,19 @@ function phbbs_get_form_html($thread){
     $html .= modules\space_br('<div class="phbbs_form">', 3);
     $html .= modules\space_br('<label>', 4);
     $html .= modules\space_br('<span class="phbbs_form">名前：</span>', 5);
-    $html .= modules\space_br('</label><br>', 4);
+    $html .= modules\space_br('</label>', 4);
     $html .= modules\space_br('<input class="phbbs_comment" type="text" name="name">', 5);
     $html .= modules\space_br('</div>', 3);
     $html .= modules\space_br('<div class="phbbs_form">', 3);
     $html .= modules\space_br('<label>', 4);
     $html .= modules\space_br('<span class="phbbs_form">内容：</span>', 5);
-    $html .= modules\space_br('</label><br>', 4);
+    $html .= modules\space_br('</label>', 4);
     $html .= modules\space_br('<textarea class="phbbs_comment" name="text"></textarea>', 5);
     $html .= modules\space_br('</div>', 3);
     $html .= modules\space_br('<div class="phbbs_form">', 3);
     $html .= modules\space_br('<label>', 4);
     $html .= modules\space_br('<span class="phbbs_form">パスワード：</span>', 5);
-    $html .= modules\space_br('</label><br>', 4);
+    $html .= modules\space_br('</label>', 4);
     $html .= modules\space_br('<input class="phbbs_password" type="text" name="password">', 5);
     $html .= modules\space_br('<p class="password">※パスワードを設定しておくと、後から編集したり、削除できるようになります。</p>', 5);
     $html .= modules\space_br('</div>', 3);

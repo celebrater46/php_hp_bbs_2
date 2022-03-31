@@ -1,0 +1,4 @@
+[root@localhost php_logtest]# cat .htaccess
+<Files ~ "\.log$">
+Deny from all
+</Files>
