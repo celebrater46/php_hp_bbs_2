@@ -3,9 +3,11 @@
 namespace php_hp_bbs\bbs;
 
 use Securimage;
+use my_micro_mailer as mmm;
 
 require_once ( dirname(__FILE__) . '/../init.php');
 require_once ( dirname(__FILE__) . '/../' . PHBBS_PIA_PATH . 'securimage/securimage.php');
+require_once ( dirname(__FILE__) . '/../' . PHBBS_MMM_PATH);
 
 date_default_timezone_set('Asia/Tokyo');
 
@@ -51,6 +53,12 @@ function save_text($posted, $thread){
     if($len <= 2000){
         error_log($text, 3, $path);
         add_log($posted, $thread);
+        $subject = "You got a new message at " . $thread . "!";
+        $msg = "Hai, dear my friend." . "\n";
+        $msg .= "You got a new message in your " . $thread . " thread at " . date('Y/m/d H:i:s') . "." . "\n\n";
+        $msg .= "Subject: " . $posted["user"] . "\n";
+        $msg .= "Message: " . $text;
+        mmm\send_mail($subject, $msg);
         header('Location: ../index.php');
         exit;
 //        return true;
