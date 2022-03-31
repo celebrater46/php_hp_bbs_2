@@ -45,7 +45,7 @@ class GetComment extends Comment
         if($this->password !== "" && $de_links){
             $path = cm\get_url_all();
             $head = strpos($path, "?") === false ? "?" : "&";
-            $html .= cm\space_br('<a href="'. $path . $head . 'edit=' . $this->id . '">[編集]</a>', 4);
+//            $html .= cm\space_br('<a href="'. $path . $head . 'edit=' . $this->id . '">[編集]</a>', 4);
             $html .= cm\space_br('<a href="'. $path . $head . 'delete=' . $this->id . '">[削除]</a>', 4);
         }
         $html .= cm\space_br('</p>', 3);

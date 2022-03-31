@@ -12,7 +12,7 @@ use common_modules as cm;
 use php_number_link_generator\classes\NumberLink;
 
 require_once "init.php";
-require_once "modules/main.php";
+require_once "bbs/modules/main.php";
 require_once "bbs/classes/GetComment.php";
 require_once "bbs/classes/State.php";
 require_once PHBBS_HCM_PATH;
@@ -76,7 +76,7 @@ function get_id_edit_or_delete($state){
 function get_comment_to_edit_delete($thread, $state){
     $id = get_id_edit_or_delete($state);
     if($id !== null){
-        $list = get_list($thread);
+        $list = modules\get_list($thread);
         $comments = get_comments($list, $thread);
 //        var_dump($comments);
         foreach ($comments as $comment){
@@ -100,15 +100,26 @@ function get_word_in_button($state){
     }
 }
 
+function get_link_to($state){
+    if($state->edit !== null){
+        return "edit.php?edit=" . $state->edit;
+    } else if($state->delete !== null){
+        return "delete.php?delete=" . $state->delete;
+    } else {
+        return "post.php";
+    }
+}
+
 function phbbs_get_form_html($thread, $state){
     $comment = get_comment_to_edit_delete($thread, $state);
     $button_word = get_word_in_button($state);
+    $link_to = get_link_to($state);
 //    var_dump($comment);
     $name = $comment === null ? "" : $comment->get_name_full();
     $text = $comment === null ? "" : implode("\n", $comment->text);
     $html = "";
     $html .= cm\space_br('<div class="phbbs_form_box">', 1);
-    $html .= cm\space_br('<form action="' . PHBBS_PATH . 'bbs/post.php" method="post">', 2);
+    $html .= cm\space_br('<form action="' . PHBBS_PATH . 'bbs/' . $link_to . '" method="post">', 2);
 
     if($state->delete !== null && $comment !== null){
         $html .= $comment->get_comment(false);

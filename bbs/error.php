@@ -53,6 +53,10 @@ $code = isset($_GET["code"]) ? (int)$_GET["code"] : 0;
             <p>エラー：パスワードが間違っています。</p>
             <p>ERROR: Password is wrong.</p>
             <?php break; ?>
+        <?php case 10: ?>
+            <p>エラー： URL パラメータの値が不正です。</p>
+            <p>ERROR: URL parameter is invalid.</p>
+            <?php break; ?>
         <?php default: ?>
             <p>不明なエラーが発生しました！</p>
             <p>Unknown error occurred!</p>

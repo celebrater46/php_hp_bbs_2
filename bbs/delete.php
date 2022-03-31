@@ -6,7 +6,7 @@ use php_hp_bbs\bbs\classes\DeleteComment;
 
 require_once ( dirname(__FILE__) . '/../init.php');
 require_once("classes/Comment.php");
-require_once("classes/PostComment.php");
+require_once("classes/DeleteComment.php");
 require_once("modules/main.php");
 
 $comment = new DeleteComment();
