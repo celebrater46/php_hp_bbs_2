@@ -3,27 +3,17 @@
 namespace php_hp_bbs\bbs\classes;
 
 use common_modules as cm;
+//use Comment;
 
 require_once ( dirname(__FILE__) . '/../../init.php');
 require_once ( dirname(__FILE__) . '/../../' . PHBBS_HCM_PATH);
+//require_once ('Comment.php');
 
-class Post
+class PostComment extends Comment
 {
-    public $id;
-    public $thread;
     public $log;
-    public $reply;
-    public $date;
-    public $date_unix;
     public $name_full;
-    public $user;
-    public $title;
-    public $text;
     public $len;
-    public $cap;
-    public $hp;
-    public $mail;
-    public $ip;
 
     function __construct(){
         $this->name_full = cm\h($_POST["name"]);
@@ -65,7 +55,7 @@ class Post
     }
 
     function save_text(){
-        $path = "threads/" . $this->thread . "/comments/" . $this->id . ".txt";
+        $path = "comments/" . $this->thread . "/" . $this->id . ".txt";
         error_log($this->text, 3, $path);
         $this->add_log();
     }

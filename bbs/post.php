@@ -3,17 +3,19 @@
 namespace php_hp_bbs\bbs;
 
 use Securimage;
-use php_hp_bbs\bbs\classes\Post;
+use php_hp_bbs\bbs\classes\Comment;
+use php_hp_bbs\bbs\classes\PostComment;
 use my_micro_mailer as mmm;
 
 require_once ( dirname(__FILE__) . '/../init.php');
 require_once ( dirname(__FILE__) . '/../' . PHBBS_PIA_PATH . 'securimage/securimage.php');
 require_once ( dirname(__FILE__) . '/../' . PHBBS_MMM_PATH);
-require_once ("classes/Post.php");
+require_once("classes/Comment.php");
+require_once("classes/PostComment.php");
 
 date_default_timezone_set('Asia/Tokyo');
 
-$posted = new Post();
+$posted = new PostComment();
 
 if(mb_strlen($posted->user, "UTF-8") > 50){
     header('Location: error.php?code=1');

@@ -3,13 +3,13 @@
 namespace php_hp_bbs;
 
 use php_img_auth\modules as modules;
-use php_hp_bbs\bbs\classes\Comment;
+use php_hp_bbs\bbs\classes\GetComment;
 use php_img_auth as pia;
 
 use php_number_link_generator\classes\NumberLink;
 
 require_once "init.php";
-require_once "bbs/classes/Comment.php";
+require_once "bbs/classes/GetComment.php";
 require_once PHBBS_HCM_PATH;
 require_once PHBBS_PIA_PATH . "init.php";
 require_once PHBBS_PIA_PATH . "pia_get_html.php";
@@ -30,7 +30,7 @@ function get_list($thread){
 function get_comments($list, $thread){
     $array = [];
     foreach ($list as $line){
-        array_push($array, new Comment($line, $thread));
+        array_push($array, new GetComment($line, $thread));
     }
     return $array;
 }
