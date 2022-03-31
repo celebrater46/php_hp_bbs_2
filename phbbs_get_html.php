@@ -88,6 +88,13 @@ function phbbs_get_form_html($thread){
     $html .= modules\space_br('</label><br>', 4);
     $html .= modules\space_br('<textarea class="phbbs_comment" name="text"></textarea>', 5);
     $html .= modules\space_br('</div>', 3);
+    $html .= modules\space_br('<div class="phbbs_form">', 3);
+    $html .= modules\space_br('<label>', 4);
+    $html .= modules\space_br('<span class="phbbs_form">パスワード：</span>', 5);
+    $html .= modules\space_br('</label><br>', 4);
+    $html .= modules\space_br('<input class="phbbs_password" type="text" name="password">', 5);
+    $html .= modules\space_br('<p class="password">※パスワードを設定しておくと、後から編集したり、削除できるようになります。</p>', 5);
+    $html .= modules\space_br('</div>', 3);
     if(PHBBS_AUTH){
         $html .= pia\pia_get_html(false, 0);
     }

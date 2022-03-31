@@ -82,6 +82,11 @@ textarea.phbbs_comment{
     height: 500px;
 }
 
+p.password{
+    font-size: 0.8rem;
+    margin: 5px auto;
+}
+
 button.submit{
     color: #eeeeee;
     background-color: #333333;

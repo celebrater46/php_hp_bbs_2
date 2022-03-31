@@ -54,8 +54,8 @@ function save_text($posted, $thread){
         error_log($text, 3, $path);
         add_log($posted, $thread);
         $subject = "You got a new message at " . $thread . "!";
-        $msg = "Hai, dear my friend." . "\n";
-        $msg .= "You got a new message in your " . $thread . " thread at " . date('Y/m/d H:i:s') . "." . "\n\n";
+        $msg = "Hi, dear my friend." . "\n";
+        $msg .= "You got a new message in your " . PHBBS_SITE_NAME . "'s " . $thread . " thread at " . date('Y/m/d H:i:s') . "." . "\n\n";
         $msg .= "Subject: " . $posted["user"] . "\n";
         $msg .= "Message: " . $text;
         mmm\send_mail($subject, $msg);
