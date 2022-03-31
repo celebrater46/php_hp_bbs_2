@@ -40,7 +40,7 @@ function get_comment($comment){
     $html .= modules\space_br('<hr>', 3);
     $html .= modules\space_br('<p>', 3);
     $html .= modules\space_br($comment->id . ": ", 4);
-    $html .= modules\space_br('<span class="phbbs_name">' . $comment->sender . $comment->cap . "</span>", 4);
+    $html .= modules\space_br('<span class="phbbs_name">' . $comment->user . $comment->cap . "</span>", 4);
     $html .= modules\space_br($comment->date_string, 4);
     $html .= modules\space_br('</p>', 3);
     $html .= modules\space_br('<div class="phbbs_text">', 3);
