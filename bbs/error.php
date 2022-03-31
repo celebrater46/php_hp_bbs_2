@@ -33,6 +33,14 @@ $code = isset($_GET["code"]) ? (int)$_GET["code"] : 0;
             <p>ただいま投稿が一時的に制限されています。</p>
             <p>Post failed because of the administrator's inconvenience.</p>
             <?php break; ?>
+        <?php case 5: ?>
+            <p>パスワードは半角英数字のみで入力してください。</p>
+            <p>Please type a password only half-width alphanumeric characters.</p>
+            <?php break; ?>
+        <?php case 6: ?>
+            <p>パスワードは半角英数字で 8 文字以上、大文字と小文字を両方使って入力してください。</p>
+            <p>Password must contain at least one uppercase letter, one lowercase letter and a number.</p>
+            <?php break; ?>
         <?php default: ?>
             <p>不明なエラーが発生しました！</p>
             <p>Unknown error occurred!</p>

@@ -47,6 +47,10 @@ div.phbbs_comment{
     margin: 50px auto 20px;
 }
 
+div.phbbs_comment > p > a{
+    font-size: 0.9rem;
+}
+
 div.phbbs_text{
     margin: 20px auto;
 }

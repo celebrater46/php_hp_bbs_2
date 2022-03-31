@@ -17,4 +17,5 @@ class Comment
     protected $hp; // 投稿者のホームページの URL
     protected $mail; // 投稿者のメールアドレス
     protected $ip; // 投稿者の IP アドレス
+    protected $password; // コメント編集ないし削除用
 }

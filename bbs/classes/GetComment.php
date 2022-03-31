@@ -26,6 +26,7 @@ class GetComment extends Comment
         $this->hp = $list_data[7];
         $this->mail = $list_data[8];
         $this->ip = $list_data[9];
+        $this->password = $list_data[10];
         $this->get_text();
     }
 
@@ -36,6 +37,12 @@ class GetComment extends Comment
         $html .= cm\space_br($this->id . ": ", 4);
         $html .= cm\space_br('<span class="phbbs_name">' . $this->user . $this->cap . "</span>", 4);
         $html .= cm\space_br($this->date_string, 4);
+        if($this->password !== ""){
+            $path = cm\get_url_all();
+            $head = strpos($path, "?") === false ? "?" : "&";
+            $html .= cm\space_br('<a href="'. $path . $head . 'edit=' . $this->id . '">[編集]</a>', 4);
+            $html .= cm\space_br('<a href="'. $path . $head . 'delete=' . $this->id . '">[削除]</a>', 4);
+        }
         $html .= cm\space_br('</p>', 3);
         $html .= cm\space_br('<div class="phbbs_text">', 3);
         if($this->reply !== 0 && $this->reply !== ""){

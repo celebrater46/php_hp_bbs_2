@@ -29,6 +29,7 @@ class PostComment extends Comment
         $this->hp = "";
         $this->mail = "";
         $this->ip = $_SERVER['REMOTE_ADDR'];
+        $this->password = cm\h($_POST["thread_name"]);
     }
 
     function get_line(){
