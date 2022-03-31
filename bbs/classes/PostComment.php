@@ -10,7 +10,6 @@ require_once ( dirname(__FILE__) . '/../../' . PHBBS_HCM_PATH);
 class PostComment extends Comment
 {
     private $log;
-    private $name_full;
     public $len;
 
     function __construct(){
@@ -39,6 +38,7 @@ class PostComment extends Comment
             "date" =>  $this->date,
             "date_unix" => $this->date_unix,
             "user" => $this->user,
+            "user_full" => $this->name_full,
             "title" => $this->title,
             "cap" => $this->cap,
             "hp" => $this->hp,

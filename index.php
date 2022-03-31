@@ -21,9 +21,6 @@ require_once "phbbs_get_html.php";
 <body>
     <div class="containter">
         <h1><?php echo PHBBS_SITE_NAME; ?></h1>
-        <p>作品の感想、アプリやゲームのバグ報告等あったらください。</p>
-        <p>名前の後に #（半角シャープ）を追加し、任意の文字列を入れると、</p>
-        <p>なりすまし防止用の暗号キーが追加されます（2ch でいう「トリ」です）。</p>
         <?php echo phbbs_get_html("test2"); ?>
     </div>
 </body>

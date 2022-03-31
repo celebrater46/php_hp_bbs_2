@@ -21,23 +21,28 @@ class GetComment extends Comment
         $this->date_string = $this->get_date_string($list_data[2]);
         $this->date_unix = $list_data[3];
         $this->user = $list_data[4] === "" ? "名も無き投稿者" : $list_data[4];
-        $this->title = $list_data[5] === "" ? "無題" : $list_data[5];
-        $this->cap = $list_data[6] === "" ? "----------" : "◆" . $list_data[6];
-        $this->hp = $list_data[7];
-        $this->mail = $list_data[8];
-        $this->ip = $list_data[9];
-        $this->password = $list_data[10];
+        $this->name_full = $list_data[5] === "" ? "名も無き投稿者" : $list_data[5];
+        $this->title = $list_data[6] === "" ? "無題" : $list_data[6];
+        $this->cap = $list_data[7] === "" ? "" : "◆" . $list_data[7];
+        $this->hp = $list_data[8];
+        $this->mail = $list_data[9];
+        $this->ip = $list_data[10];
+        $this->password = $list_data[11];
         $this->get_text();
     }
 
-    function get_comment(){
+    function get_name_full(){
+        return $this->name_full;
+    }
+
+    function get_comment($de_links){
         $html = cm\space_br('<div class="phbbs_comment">', 2);
         $html .= cm\space_br('<hr>', 3);
         $html .= cm\space_br('<p>', 3);
         $html .= cm\space_br($this->id . ": ", 4);
         $html .= cm\space_br('<span class="phbbs_name">' . $this->user . $this->cap . "</span>", 4);
         $html .= cm\space_br($this->date_string, 4);
-        if($this->password !== ""){
+        if($this->password !== "" && $de_links){
             $path = cm\get_url_all();
             $head = strpos($path, "?") === false ? "?" : "&";
             $html .= cm\space_br('<a href="'. $path . $head . 'edit=' . $this->id . '">[編集]</a>', 4);

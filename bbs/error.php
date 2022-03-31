@@ -41,6 +41,10 @@ $code = isset($_GET["code"]) ? (int)$_GET["code"] : 0;
             <p>パスワードは半角英数字で 8 文字以上、大文字と小文字を両方使って入力してください。</p>
             <p>Password must contain at least one uppercase letter, one lowercase letter and a number.</p>
             <?php break; ?>
+        <?php case 7: ?>
+            <p>エラー：コメントファイルの読み込みに失敗しました。</p>
+            <p>ERROR: Failed to load your comment.</p>
+            <?php break; ?>
         <?php default: ?>
             <p>不明なエラーが発生しました！</p>
             <p>Unknown error occurred!</p>
