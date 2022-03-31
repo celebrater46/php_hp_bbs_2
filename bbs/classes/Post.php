@@ -3,13 +3,8 @@
 namespace php_hp_bbs\bbs\classes;
 
 use common_modules as cm;
-//use Securimage;
-//use php_hp_bbs\bbs\classes\Post;
-//use my_micro_mailer as mmm;
 
 require_once ( dirname(__FILE__) . '/../../init.php');
-//require_once ( dirname(__FILE__) . '/../../' . PHBBS_PIA_PATH . 'securimage/securimage.php');
-//require_once ( dirname(__FILE__) . '/../../' . PHBBS_MMM_PATH);
 require_once ( dirname(__FILE__) . '/../../' . PHBBS_HCM_PATH);
 
 class Post
@@ -63,15 +58,6 @@ class Post
         ];
     }
 
-//    function send_mail(){
-//        $subject = "You got a new message at " . $this->thread . "!";
-//        $msg = "Hi, dear my friend." . "\n";
-//        $msg .= "You got a new message in your " . PHBBS_SITE_NAME . "'s " . $this->thread . " thread at " . $this->date . "." . "\n\n";
-//        $msg .= "Subject: " . $this->user . "\n";
-//        $msg .= "Message: " . $this->text;
-//        mmm\send_mail($subject, $msg);
-//    }
-
     function add_log(){
         $array = $this->get_line();
         $line = implode("<>", $array) . "<>0";
@@ -79,28 +65,9 @@ class Post
     }
 
     function save_text(){
-//        $text = h($_POST["text"]);
         $path = "threads/" . $this->thread . "/comments/" . $this->id . ".txt";
-//        $len = mb_strlen($this->text, "UTF-8");
         error_log($this->text, 3, $path);
         $this->add_log();
-//        if($len <= 2000){
-//            error_log($this->text, 3, $path);
-//            $this->add_log();
-//            $subject = "You got a new message at " . $this->thread . "!";
-//            $msg = "Hi, dear my friend." . "\n";
-//            $msg .= "You got a new message in your " . PHBBS_SITE_NAME . "'s " . $this->thread . " thread at " . $this->date . "." . "\n\n";
-//            $msg .= "Subject: " . $this->user . "\n";
-//            $msg .= "Message: " . $this->text;
-//            mmm\send_mail($subject, $msg);
-//            header('Location: ../index.php');
-//            exit;
-////        return true;
-//        } else {
-////        return false;
-//            header('Location: error.php?code=2');
-//            exit;
-//        }
     }
 
     function get_cap($name){
@@ -130,7 +97,6 @@ class Post
     }
 
     function get_id(){
-//        $list = file("lists/" . $thread . ".log");
         $list = file($this->log);
         $array = [];
         foreach ($list as $line){
