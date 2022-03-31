@@ -4,12 +4,12 @@ namespace php_hp_bbs\bbs;
 
 use Securimage;
 use php_hp_bbs\bbs\classes\PostComment;
-use my_micro_mailer as mmm;
+//use my_micro_mailer as mmm;
 use php_hp_bbs\bbs\modules as modules;
 
 require_once ( dirname(__FILE__) . '/../init.php');
 require_once ( dirname(__FILE__) . '/../' . PHBBS_PIA_PATH . 'securimage/securimage.php');
-require_once ( dirname(__FILE__) . '/../' . PHBBS_MMM_PATH);
+//require_once ( dirname(__FILE__) . '/../' . PHBBS_MMM_PATH);
 require_once("classes/Comment.php");
 require_once("classes/PostComment.php");
 require_once("modules/main.php");
@@ -38,8 +38,9 @@ if(PHBBS_AUTH){
     check_auth($posted);
 } else {
     $posted->save_text();
-    modules\send_mail($posted);
-    header('Location: ../index.php');
+//    modules\send_mail_posted($posted);
+//    header('Location: ../index.php');
+    header('Location: succeed.php?code=0');
     exit;
 }
 
@@ -73,13 +74,13 @@ function check_auth($posted){
         header('Location: error.php?code=4');
     } else if(PHBBS_AUTH === false){
         $posted->save_text();
-        modules\send_mail($posted);
-        header('Location: ../index.php');
+//        modules\send_mail_posted($posted);
+        header('Location: succeed.php?code=0');
     } else if(isset($_POST['captcha_code'])) {
         if($securimage->check($_POST['captcha_code']) === true) {
             $posted->save_text();
-            modules\send_mail($posted);
-            header('Location: ../index.php');
+//            modules\send_mail_posted($posted);
+            header('Location: succeed.php?code=0');
         } else {
             header('Location: error.php?code=3');
         }

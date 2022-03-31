@@ -2,6 +2,16 @@
 
 namespace php_hp_bbs\bbs\modules;
 
+function get_list($thread){
+    $txt = PHBBS_PATH . "bbs/lists/" . $thread . ".log";
+    if(file_exists($txt)){
+        return file($txt);
+    } else {
+        echo "NOT FOUND: " . $txt;
+        return null;
+    }
+}
+
 function check_password($password){
     if(isset($password)){
         $ptn = "/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){8,}/"; // 大文字小文字数字を含む8文字以上
@@ -31,13 +41,4 @@ function check_posted_data($posted){
         header('Location: error.php?code=6');
         exit;
     }
-}
-
-function send_mail($posted){
-    $subject = "You got a new message at " . $posted->thread . "!";
-    $msg = "Hi, dear my friend." . "\n";
-    $msg .= "You got a new message in your " . PHBBS_SITE_NAME . "'s " . $posted->thread . " thread at " . $posted->date . "." . "\n\n";
-    $msg .= "Subject: " . $posted->user . "\n";
-    $msg .= "Message: " . $posted->text;
-    mmm\send_mail($subject, $msg);
 }

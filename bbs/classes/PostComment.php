@@ -3,20 +3,19 @@
 namespace php_hp_bbs\bbs\classes;
 
 use common_modules as cm;
+use my_micro_mailer as mmm;
 
 require_once ( dirname(__FILE__) . '/../../init.php');
 require_once ( dirname(__FILE__) . '/../../' . PHBBS_HCM_PATH);
+require_once ( dirname(__FILE__) . '/../../' . PHBBS_MMM_PATH);
 
 class PostComment extends Comment
 {
-    private $log;
-    public $len;
-
     function __construct(){
         $this->name_full = cm\h($_POST["name"]);
         $this->thread = cm\h($_POST["thread_name"]);
         $this->log = "lists/" . $this->thread . ".log";
-        $this->id = $this->get_id($this->thread);
+        $this->id = $this->get_id();
         $this->reply = isset($_POST["reply"]) ? (int)$_POST["reply"] : 0;
         $this->date = date("Y-m-d_H:i:s");
         $this->date_unix = time();
@@ -57,6 +56,7 @@ class PostComment extends Comment
         $path = "comments/" . $this->thread . "/" . $this->id . ".txt";
         error_log($this->text, 3, $path);
         $this->add_log();
+        $this->send_mail_posted();
     }
 
     function get_cap($name){
@@ -85,14 +85,12 @@ class PostComment extends Comment
         }
     }
 
-    function get_id(){
-        $list = file($this->log);
-        $array = [];
-        foreach ($list as $line){
-            $temp = explode("<>", $line);
-            array_push($array, (int)$temp[0]);
-        }
-        rsort($array);
-        return $array[0] + 1;
+    function send_mail_posted(){
+        $subject = "You got a new message at " . $this->thread . "!";
+        $msg = "Hi, dear my friend." . "\n";
+        $msg .= "You got a new message in your " . PHBBS_SITE_NAME . "'s " . $this->thread . " thread at " . $this->date . "." . "\n\n";
+        $msg .= "Subject: " . $this->user . "\n";
+        $msg .= "Message: " . $this->text;
+        mmm\send_mail($subject, $msg);
     }
 }

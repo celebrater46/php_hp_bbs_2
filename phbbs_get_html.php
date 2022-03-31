@@ -5,12 +5,14 @@ namespace php_hp_bbs;
 //use php_img_auth\modules as modules;
 use php_hp_bbs\bbs\classes\GetComment;
 use php_hp_bbs\bbs\classes\State;
+use php_hp_bbs\bbs\modules as modules;
 use php_img_auth as pia;
 use common_modules as cm;
 
 use php_number_link_generator\classes\NumberLink;
 
 require_once "init.php";
+require_once "modules/main.php";
 require_once "bbs/classes/GetComment.php";
 require_once "bbs/classes/State.php";
 require_once PHBBS_HCM_PATH;
@@ -20,15 +22,15 @@ require_once PHBBS_PIA_PATH . "pia_get_html.php";
 require_once( PHBBS_PNLG_PATH . 'init.php');
 require_once( PHBBS_PNLG_PATH . 'classes/NumberLink.php');
 
-function get_list($thread){
-    $txt = PHBBS_PATH . "bbs/lists/" . $thread . ".log";
-    if(file_exists($txt)){
-        return file($txt);
-    } else {
-        echo "NOT FOUND: " . $txt;
-        return null;
-    }
-}
+//function get_list($thread){
+//    $txt = PHBBS_PATH . "bbs/lists/" . $thread . ".log";
+//    if(file_exists($txt)){
+//        return file($txt);
+//    } else {
+//        echo "NOT FOUND: " . $txt;
+//        return null;
+//    }
+//}
 
 function get_comments($list, $thread){
     $array = [];
@@ -39,7 +41,7 @@ function get_comments($list, $thread){
 }
 
 function phbbs_get_comments_html($thread, $state){
-    $list = get_list($thread);
+    $list = modules\get_list($thread);
     $comments = get_comments($list, $thread);
     $comments_num = count($comments);
     $link = new NumberLink($comments_num, PHBBS_MAX_COMMENTS);
@@ -130,7 +132,7 @@ function phbbs_get_form_html($thread, $state){
     $html .= cm\space_br('<span class="phbbs_form">パスワード：</span>', 5);
     $html .= cm\space_br('</label>', 4);
     $html .= cm\space_br('<input class="phbbs_password" type="password" name="password">', 5);
-    $html .= cm\space_br('<p class="password">※パスワードを設定しておくと、後から編集したり、削除できるようになります。</p>', 5);
+    $html .= cm\space_br('<p class="password">※パスワードを設定しておくと、後から削除できるようになります。</p>', 5);
     $html .= cm\space_br('</div>', 3);
     if(PHBBS_AUTH){
         $html .= pia\pia_get_html(false, 0);

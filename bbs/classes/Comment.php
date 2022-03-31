@@ -19,4 +19,17 @@ class Comment
     protected $mail; // 投稿者のメールアドレス
     protected $ip; // 投稿者の IP アドレス
     protected $password; // コメント編集ないし削除用
+    public $len;
+    protected $log;
+
+    function get_id(){
+        $list = file($this->log);
+        $array = [];
+        foreach ($list as $line){
+            $temp = explode("<>", $line);
+            array_push($array, (int)$temp[0]);
+        }
+        rsort($array);
+        return $array[0] + 1;
+    }
 }

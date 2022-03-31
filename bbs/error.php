@@ -7,7 +7,7 @@ $code = isset($_GET["code"]) ? (int)$_GET["code"] : 0;
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="Author" content="Enin Fujimi">
@@ -44,6 +44,14 @@ $code = isset($_GET["code"]) ? (int)$_GET["code"] : 0;
         <?php case 7: ?>
             <p>エラー：コメントファイルの読み込みに失敗しました。</p>
             <p>ERROR: Failed to load your comment.</p>
+            <?php break; ?>
+        <?php case 8: ?>
+            <p>エラー：コメントファイルを読み込みましたが、データが見つかりませんでした。</p>
+            <p>ERROR: Not found your comment in the log.</p>
+            <?php break; ?>
+        <?php case 9: ?>
+            <p>エラー：パスワードが間違っています。</p>
+            <p>ERROR: Password is wrong.</p>
             <?php break; ?>
         <?php default: ?>
             <p>不明なエラーが発生しました！</p>
