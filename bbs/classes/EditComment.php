@@ -9,7 +9,6 @@ class EditComment extends Comment
         $this->thread = cm\h($_POST["thread_name"]);
         $this->log = "lists/" . $this->thread . ".log";
         $this->id = $this->get_id();
-//        $this->reply = isset($_POST["reply"]) ? (int)$_POST["reply"] : 0;
         $this->date = date("Y-m-d_H:i:s");
         $this->date_unix = time();
         $this->user = $this->get_name($this->name_full);

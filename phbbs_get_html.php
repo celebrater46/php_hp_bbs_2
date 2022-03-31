@@ -2,7 +2,6 @@
 
 namespace php_hp_bbs;
 
-//use php_img_auth\modules as modules;
 use php_hp_bbs\bbs\classes\GetComment;
 use php_hp_bbs\bbs\classes\State;
 use php_hp_bbs\bbs\modules as modules;
@@ -22,16 +21,6 @@ require_once PHBBS_PIA_PATH . "pia_get_html.php";
 require_once( PHBBS_PNLG_PATH . 'init.php');
 require_once( PHBBS_PNLG_PATH . 'classes/NumberLink.php');
 
-//function get_list($thread){
-//    $txt = PHBBS_PATH . "bbs/lists/" . $thread . ".log";
-//    if(file_exists($txt)){
-//        return file($txt);
-//    } else {
-//        echo "NOT FOUND: " . $txt;
-//        return null;
-//    }
-//}
-
 function get_comments($list, $thread){
     $array = [];
     foreach ($list as $line){
@@ -47,12 +36,10 @@ function phbbs_get_comments_html($thread, $state){
     $link = new NumberLink($comments_num, PHBBS_MAX_COMMENTS);
     rsort($comments); // reverse the order of the list
     $html = "";
-//    $state = new State();
     $start_comment = ($state->page - 1) * PHBBS_MAX_COMMENTS;
     $end_comment = $state->page * PHBBS_MAX_COMMENTS;
     for($i = $start_comment; $i < $end_comment; $i++){
         if(isset($comments[$i])){
-//            $html .= get_comment($comments[$i]);
             $html .= $comments[$i]->get_comment(true);
         }
     }
@@ -78,7 +65,6 @@ function get_comment_to_edit_delete($thread, $state){
     if($id !== null){
         $list = modules\get_list($thread);
         $comments = get_comments($list, $thread);
-//        var_dump($comments);
         foreach ($comments as $comment){
             if($comment->id === $id){
                 return $comment;
@@ -114,7 +100,6 @@ function phbbs_get_form_html($thread, $state){
     $comment = get_comment_to_edit_delete($thread, $state);
     $button_word = get_word_in_button($state);
     $link_to = get_link_to($state);
-//    var_dump($comment);
     $name = $comment === null ? "" : $comment->get_name_full();
     $text = $comment === null ? "" : implode("\n", $comment->text);
     $html = "";
