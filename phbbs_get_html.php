@@ -12,6 +12,7 @@ use php_number_link_generator\classes\NumberLink;
 
 require_once "init.php";
 require_once "bbs/modules/main.php";
+require_once "bbs/classes/Comment.php";
 require_once "bbs/classes/GetComment.php";
 require_once "bbs/classes/State.php";
 require_once PHBBS_HCM_PATH;

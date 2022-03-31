@@ -4,6 +4,7 @@ namespace php_hp_bbs;
 
 ini_set('display_errors', 1);
 define('PHBBS_SITE_NAME', "PHP HP BBS 2");
+define('PHBBS_AUTHOR', "Enin Fujimi");
 define('PHBBS_PATH', "");
 define('PHBBS_DEFAULT_THREAD', "test"); // スレッド名の指定がない時に表示されるデフォルトスレッド
 define('PHBBS_MULTH_PAGE_MODE', false); // 複数のスレッドを使用するか
