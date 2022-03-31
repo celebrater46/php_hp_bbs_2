@@ -3,7 +3,6 @@
 namespace php_hp_bbs\bbs;
 
 use Securimage;
-use php_hp_bbs\bbs\classes\Comment;
 use php_hp_bbs\bbs\classes\PostComment;
 use my_micro_mailer as mmm;
 

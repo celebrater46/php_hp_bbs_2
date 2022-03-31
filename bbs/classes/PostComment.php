@@ -3,16 +3,14 @@
 namespace php_hp_bbs\bbs\classes;
 
 use common_modules as cm;
-//use Comment;
 
 require_once ( dirname(__FILE__) . '/../../init.php');
 require_once ( dirname(__FILE__) . '/../../' . PHBBS_HCM_PATH);
-//require_once ('Comment.php');
 
 class PostComment extends Comment
 {
-    public $log;
-    public $name_full;
+    private $log;
+    private $name_full;
     public $len;
 
     function __construct(){

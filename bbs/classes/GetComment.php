@@ -2,6 +2,10 @@
 
 namespace php_hp_bbs\bbs\classes;
 
+use common_modules as cm;
+
+require_once ( dirname(__FILE__) . '/../../' . PHBBS_HCM_PATH);
+
 class GetComment extends Comment
 {
     public function __construct($line, $thread)
@@ -23,6 +27,27 @@ class GetComment extends Comment
         $this->mail = $list_data[8];
         $this->ip = $list_data[9];
         $this->get_text();
+    }
+
+    function get_comment(){
+        $html = cm\space_br('<div class="phbbs_comment">', 2);
+        $html .= cm\space_br('<hr>', 3);
+        $html .= cm\space_br('<p>', 3);
+        $html .= cm\space_br($this->id . ": ", 4);
+        $html .= cm\space_br('<span class="phbbs_name">' . $this->user . $this->cap . "</span>", 4);
+        $html .= cm\space_br($this->date_string, 4);
+        $html .= cm\space_br('</p>', 3);
+        $html .= cm\space_br('<div class="phbbs_text">', 3);
+        if($this->reply !== 0 && $this->reply !== ""){
+            $html .= cm\space_br('<p>>> ' . $this->reply . "</p>", 4);
+            $html .= cm\space_br('<p>　</p>', 4);
+        }
+        foreach ($this->text as $line){
+            $html .= cm\space_br("<p>" . $line . "</p>", 4);
+        }
+        $html .= cm\space_br('</div>', 3);
+        $html .= cm\space_br('</div>', 2);
+        return $html;
     }
 
     function get_text(){

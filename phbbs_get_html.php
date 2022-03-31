@@ -37,28 +37,6 @@ function get_comments($list, $thread){
     return $array;
 }
 
-function get_comment($comment){
-//    var_dump($comment);
-    $html = modules\space_br('<div class="phbbs_comment">', 2);
-    $html .= modules\space_br('<hr>', 3);
-    $html .= modules\space_br('<p>', 3);
-    $html .= modules\space_br($comment->id . ": ", 4);
-    $html .= modules\space_br('<span class="phbbs_name">' . $comment->user . $comment->cap . "</span>", 4);
-    $html .= modules\space_br($comment->date_string, 4);
-    $html .= modules\space_br('</p>', 3);
-    $html .= modules\space_br('<div class="phbbs_text">', 3);
-    if($comment->reply !== 0 && $comment->reply !== ""){
-        $html .= modules\space_br('<p>>> ' . $comment->reply . "</p>", 4);
-        $html .= modules\space_br('<p>　</p>', 4);
-    }
-    foreach ($comment->text as $line){
-        $html .= modules\space_br("<p>" . $line . "</p>", 4);
-    }
-    $html .= modules\space_br('</div>', 3);
-    $html .= modules\space_br('</div>', 2);
-    return $html;
-}
-
 function phbbs_get_comments_html($thread){
     $list = get_list($thread);
     $comments = get_comments($list, $thread);
@@ -71,12 +49,10 @@ function phbbs_get_comments_html($thread){
     $end_comment = $state->page * PHBBS_MAX_COMMENTS;
     for($i = $start_comment; $i < $end_comment; $i++){
         if(isset($comments[$i])){
-            $html .= get_comment($comments[$i]);
+//            $html .= get_comment($comments[$i]);
+            $html .= $comments[$i]->get_comment();
         }
     }
-//    foreach ($comments as $comment){
-//        $html .= get_comment($comment);
-//    }
     if(PHBBS_MAX_COMMENTS < $comments_num){
         $parameters = "";
         $html .= $link->get_page_links_html($parameters);
