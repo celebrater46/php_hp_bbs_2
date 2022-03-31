@@ -36,6 +36,7 @@ $posted = new Post();
 //if(mb_strlen($posted["user"], "UTF-8") > 50){
 if(mb_strlen($posted->user, "UTF-8") > 50){
     header('Location: error.php?code=1');
+    exit;
 } else if(PHBBS_AUTH){
     check_auth($posted);
 //    $bool = save_text($posted, $thread);
@@ -100,17 +101,20 @@ function check_auth($posted){
     $securimage = new Securimage();
     if(PHBBS_AVAILABLE === false){
         header('Location: error.php?code=4');
-        exit;
     } else if(PHBBS_AUTH === false){
         $posted->save_text();
+        send_mail($posted);
+        header('Location: ../index.php');
     } else if(isset($_POST['captcha_code'])) {
         if($securimage->check($_POST['captcha_code']) === true) {
             $posted->save_text();
+            send_mail($posted);
+            header('Location: ../index.php');
         } else {
             header('Location: error.php?code=3');
-            exit;
         }
     }
+    exit;
 }
 
 //function add_log($posted, $log){
