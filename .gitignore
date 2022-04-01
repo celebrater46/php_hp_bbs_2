@@ -3,3 +3,4 @@ bbs/test/*.txt
 bbs/test/comments/
 memo.txt
 temp.txt
+init.php
