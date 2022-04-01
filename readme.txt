@@ -38,7 +38,7 @@ zipファイルを DL して展開し、レンタルサーバーにアップロ�
 init.php を変更することでサーバーのどこにでも配置できますが、
 当アプリと同じディレクトリに配置するのが簡単です。
 
-一応解説しておくと、FP COMMON MODULES 内にある
+一応解説しておくと、FP COMMON MODULES 内にある 
 php_img_auth というのが画像認証用プログラム、
 php_number_link_generator というのが
 コメントを一定数ごとにページ分割する機能、
