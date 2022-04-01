@@ -16,7 +16,7 @@ require_once "bbs/classes/Comment.php";
 require_once "bbs/classes/GetComment.php";
 require_once "bbs/classes/State.php";
 require_once PHBBS_HCM_PATH;
-require_once PHBBS_PIA_PATH . "init.php";
+//require_once PHBBS_PIA_PATH . "pia_init.php";
 require_once PHBBS_PIA_PATH . "pia_get_html.php";
 
 require_once( PHBBS_PNLG_PATH . 'init.php');
@@ -134,8 +134,8 @@ function phbbs_get_form_html($thread, $state){
         $html .= cm\space_br('<p class="password">※パスワードを設定しておくと、後から削除できるようになります。</p>', 5);
     }
     $html .= cm\space_br('</div>', 3);
-    if(PHBBS_AUTH){
-        $html .= pia\pia_get_html(false, 0);
+    if(PHBBS_AUTH && $state->edit === null && $state->delete === null){
+        $html .= pia\pia_get_html(false, 0, PHBBS_PIA_PATH);
     }
     $html .= cm\space_br('<input type="hidden" name="thread_name" value="' . $thread . '">', 3);
     $html .= cm\space_br('<div class="phbbs_form"><button class="submit">' . $button_word . '</button></div>', 3);
@@ -169,6 +169,7 @@ function phbbs_get_html($str){
     if($state->edit === null && $state->delete === null){
         $html .= phbbs_get_comments_html($thread, $state);
     }
-    $html .= cm\space_br('<script src="' . PHBBS_PIA_PATH . 'main.js"></script>', 1);
+    $html .= pia\pia_get_script_html(PHBBS_PIA_PATH);
+//    $html .= cm\space_br('<script src="' . PHBBS_PIA_PATH . 'main.js"></script>', 1);
     return $html;
 }

@@ -20,7 +20,7 @@ require_once "phbbs_get_html.php";
 <body>
     <div class="containter">
         <h1><?php echo PHBBS_SITE_NAME; ?></h1>
-        <?php echo phbbs_get_html("test2"); ?>
+        <?php echo phbbs_get_html("test"); ?>
     </div>
 </body>
 </html>

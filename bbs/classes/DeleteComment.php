@@ -7,8 +7,8 @@ use my_micro_mailer as mmm;
 
 require_once ( dirname(__FILE__) . '/../../init.php');
 require_once ( dirname(__FILE__) . '/../modules/main.php');
-require_once ( dirname(__FILE__) . '/../../' . PHBBS_HCM_PATH);
-require_once ( dirname(__FILE__) . '/../../' . PHBBS_MMM_PATH);
+require_once PHBBS_HCM_PATH;
+require_once PHBBS_MMM_PATH;
 
 class DeleteComment extends Comment
 {

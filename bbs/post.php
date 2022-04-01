@@ -8,7 +8,7 @@ use php_hp_bbs\bbs\classes\PostComment;
 use php_hp_bbs\bbs\modules as modules;
 
 require_once ( dirname(__FILE__) . '/../init.php');
-require_once ( dirname(__FILE__) . '/../' . PHBBS_PIA_PATH . 'securimage/securimage.php');
+require_once ( PHBBS_PIA_PATH . 'securimage/securimage.php');
 require_once("classes/Comment.php");
 require_once("classes/PostComment.php");
 require_once("modules/main.php");

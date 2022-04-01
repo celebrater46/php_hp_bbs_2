@@ -4,7 +4,7 @@ namespace php_hp_bbs\bbs\classes;
 
 use common_modules as cm;
 
-require_once ( dirname(__FILE__) . '/../../' . PHBBS_HCM_PATH);
+require_once PHBBS_HCM_PATH;
 
 class GetComment extends Comment
 {
