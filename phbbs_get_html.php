@@ -121,13 +121,13 @@ function phbbs_get_form_html($thread, $state){
     } else {
         $html .= cm\space_br('<div class="phbbs_form">', 3);
         $html .= cm\space_br('<label>', 4);
-        $html .= cm\space_br('<span class="phbbs_form">名前：</span>', 5);
+        $html .= cm\space_br('<span class="phbbs_form">' . ($state->lang === 1 ? "Name" : "名前") . '：</span>', 5);
         $html .= cm\space_br('</label>', 4);
         $html .= cm\space_br('<input class="phbbs_comment" type="text" name="name" value="' . $name . '">', 5);
         $html .= cm\space_br('</div>', 3);
         $html .= cm\space_br('<div class="phbbs_form">', 3);
         $html .= cm\space_br('<label>', 4);
-        $html .= cm\space_br('<span class="phbbs_form">内容：</span>', 5);
+        $html .= cm\space_br('<span class="phbbs_form">' . ($state->lang === 1 ? "Comment" : "内容") . '：</span>', 5);
         $html .= cm\space_br('</label>', 4);
         $html .= cm\space_br('<textarea class="phbbs_comment" name="text">' . $text. '</textarea>', 5);
         $html .= cm\space_br('</div>', 3);
@@ -135,7 +135,7 @@ function phbbs_get_form_html($thread, $state){
 
     $html .= cm\space_br('<div class="phbbs_form">', 3);
     $html .= cm\space_br('<label>', 4);
-    $html .= cm\space_br('<span class="phbbs_form">パスワード：</span>', 5);
+    $html .= cm\space_br('<span class="phbbs_form">' . ($state->lang === 1 ? "Password" : "パスワード") . '：</span>', 5);
     $html .= cm\space_br('</label>', 4);
     $html .= cm\space_br('<input class="phbbs_password" type="password" name="password">', 5);
     if($state->edit === null && $state->delete === null){
@@ -143,7 +143,7 @@ function phbbs_get_form_html($thread, $state){
     }
     $html .= cm\space_br('</div>', 3);
     if(PHBBS_AUTH && $state->edit === null && $state->delete === null){
-        $html .= pia\pia_get_html(false, 0, PHBBS_PIA_PATH);
+        $html .= pia\pia_get_html(false, $state->lang, PHBBS_PIA_PATH);
     }
     $html .= cm\space_br('<input type="hidden" name="thread_name" value="' . $thread . '">', 3);
     $html .= cm\space_br('<div class="phbbs_form"><button class="submit">' . $button_word . '</button></div>', 3);
