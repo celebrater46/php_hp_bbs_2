@@ -2,7 +2,7 @@
 
 namespace php_hp_bbs\bbs\classes;
 
-use common_modules as cm;
+use fp_common_modules as cm;
 use my_micro_mailer as mmm;
 
 require_once ( dirname(__FILE__) . '/../../init.php');
@@ -83,9 +83,26 @@ class DeleteComment extends Comment
         }
     }
 
+    function get_subject($state){
+        if($state->lang === 1){
+            return "A comment in " . $this->thread . " thread was deleted by contributor - " . PHBBS_SITE_NAME;
+        } else {
+            return "【" . PHBBS_SITE_NAME . "】" . $this->thread . "スレッドのコメントが削除されました";
+        }
+    }
+
+    function get_msg($state){
+        if($state->lang === 1){
+            return "ID:" . $this->id . "'s comment in " . $this->thread . " thread has been deleted by contributor." . "\n\n" . PHBBS_SITE_NAME;
+        } else {
+            return PHBBS_SITE_NAME . " の  " . $this->thread . " スレッドの ID: " . $this->id . " のコメントが投稿者によって削除されました。";
+        }
+    }
+
     function send_mail_deleted(){
-        $subject = "【" . PHBBS_SITE_NAME . "】コメントが削除されました";
-        $msg = PHBBS_SITE_NAME . " の  " . $this->thread . " スレッドの ID: " . $this->id . " のコメントが投稿者によって削除されました。";
+        $state = new State();
+        $subject = $this->get_subject($state);
+        $msg = $this->get_msg($state);
         mmm\send_mail($subject, $msg);
     }
 }

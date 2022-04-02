@@ -6,9 +6,10 @@ class State
 {
     public $page;
     public $color;
-    public $mode;
     public $edit;
     public $delete;
+    public $lang;
+    public $mode; // 自サイト用
 
     function __construct(){
         $this->page = isset($_GET["page"]) ? (int)$_GET["page"] : 1;

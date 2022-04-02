@@ -2,7 +2,7 @@
 
 namespace php_hp_bbs\bbs\classes;
 
-use common_modules as cm;
+use fp_common_modules as cm;
 
 require_once PHBBS_HCM_PATH;
 
@@ -20,8 +20,8 @@ class GetComment extends Comment
         $this->date = $list_data[2];
         $this->date_string = $this->get_date_string($list_data[2]);
         $this->date_unix = $list_data[3];
-        $this->user = $list_data[4] === "" ? "名も無き投稿者" : $list_data[4];
-        $this->name_full = $list_data[5] === "" ? "名も無き投稿者" : $list_data[5];
+        $this->user = $list_data[4] === "" ? $this->get_no_name() : $list_data[4];
+        $this->name_full = $list_data[5] === "" ? $this->get_no_name() : $list_data[5];
         $this->title = $list_data[6] === "" ? "無題" : $list_data[6];
         $this->cap = $list_data[7] === "" ? "" : "◆" . $list_data[7];
         $this->hp = $list_data[8];
@@ -31,11 +31,22 @@ class GetComment extends Comment
         $this->get_text();
     }
 
+    function get_no_title(){
+        $state = new State();
+        return $state->lang === 1 ? "UNTITLED" : "無題";
+    }
+
+    function get_no_name(){
+        $state = new State();
+        return $state->lang === 1 ? "UNKNOWN" : "名も無き投稿者";
+    }
+
     function get_name_full(){
         return $this->name_full;
     }
 
     function get_comment($de_links){
+        $state = new State();
         if($this->password === "__DELETED__"){
             return "";
         } else {
@@ -49,7 +60,7 @@ class GetComment extends Comment
                 $path = cm\get_url_all();
                 $head = strpos($path, "?") === false ? "?" : "&";
 //            $html .= cm\space_br('<a href="'. $path . $head . 'edit=' . $this->id . '">[編集]</a>', 4);
-                $html .= cm\space_br('<a href="'. $path . $head . 'delete=' . $this->id . '">[削除]</a>', 4);
+                $html .= cm\space_br('<a href="'. $path . $head . 'delete=' . $this->id . '">' . ($state->lang === 1 ? "[delete]" : "[削除]") . '</a>', 4);
             }
             $html .= cm\space_br('</p>', 3);
             $html .= cm\space_br('<div class="phbbs_text">', 3);
@@ -78,7 +89,8 @@ class GetComment extends Comment
                 }
             }
         } else {
-            $this->text = [$path . "が存在しないか、読み込めません。"];
+            $state = new State();
+            $this->text = [$path . ($state->lang === 1 ? "does not exist or unavailable." : "が存在しないか、読み込めません。")];
         }
     }
 

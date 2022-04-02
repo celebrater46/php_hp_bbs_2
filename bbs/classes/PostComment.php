@@ -2,7 +2,7 @@
 
 namespace php_hp_bbs\bbs\classes;
 
-use common_modules as cm;
+use fp_common_modules as cm;
 use my_micro_mailer as mmm;
 
 require_once ( dirname(__FILE__) . '/../../init.php');
@@ -86,17 +86,33 @@ class PostComment extends Comment
         }
     }
 
+    function get_subject($state){
+        if($state->lang === 1){
+            return "You got a new message at " . $this->thread . "!";
+        } else {
+            return "掲示板 " . PHBBS_SITE_NAME . " の " . $this->thread . " スレッドに書き込みがありました。";
+        }
+    }
+
+    function get_msg($state){
+        if($state->lang === 1){
+            $msg = "Hi, dear my friend." . "\n";
+            $msg .= "You got a new message in your " . PHBBS_SITE_NAME . "'s " . $this->thread . " thread at " . $this->date . "." . "\n\n";
+            $msg .= "Subject: " . $this->user . "\n";
+            $msg .= "Message: " . $this->text;
+        } else {
+            $msg = "ユーザー名: " . $this->user . "\n";
+            $msg .= "メッセージ: " . $this->text . "\n";
+            $msg .= "投稿時間: " . $this->date;
+        }
+        return $msg;
+    }
+
     function send_mail_posted(){
-        $subject = "掲示板 " . PHBBS_SITE_NAME . " の " . $this->thread . " スレッドに書き込みがありました。";
+        $state = new State();
+        $subject = $this->get_subject($state);
         $msg = $subject . "\n\n";
-        $msg .= "ユーザー名: " . $this->user . "\n";
-        $msg .= "メッセージ: " . $this->text . "\n";
-        $msg .= "投稿時間: " . $this->date;
-//        $subject = "You got a new message at " . $this->thread . "!";
-//        $msg = "Hi, dear my friend." . "\n";
-//        $msg .= "You got a new message in your " . PHBBS_SITE_NAME . "'s " . $this->thread . " thread at " . $this->date . "." . "\n\n";
-//        $msg .= "Subject: " . $this->user . "\n";
-//        $msg .= "Message: " . $this->text;
+        $msg .= $this->get_msg($state);
         mmm\send_mail($subject, $msg);
     }
 }

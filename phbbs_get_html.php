@@ -6,7 +6,7 @@ use php_hp_bbs\bbs\classes\GetComment;
 use php_hp_bbs\bbs\classes\State;
 use php_hp_bbs\bbs\modules as modules;
 use php_img_auth as pia;
-use common_modules as cm;
+use fp_common_modules as cm;
 
 use php_number_link_generator\classes\NumberLink;
 
