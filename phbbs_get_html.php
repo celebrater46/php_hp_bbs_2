@@ -80,11 +80,11 @@ function get_comment_to_edit_delete($thread, $state){
 
 function get_word_in_button($state){
     if($state->edit !== null){
-        return "変更する";
+        return $state->lang === 1 ? "Change" : "変更する";
     } else if($state->delete !== null){
-        return "削除する";
+        return $state->lang === 1 ? "Delete" : "削除する";
     } else {
-        return "投稿する";
+        return $state->lang === 1 ? "Submit" : "投稿する";
     }
 }
 
@@ -95,6 +95,14 @@ function get_link_to($state){
         return "delete.php?delete=" . $state->delete;
     } else {
         return "post.php";
+    }
+}
+
+function get_about_password($state){
+    if($state->lang === 1){
+        return "If register the password, you can delete the comment later.";
+    } else {
+        return "※パスワードを設定しておくと、後から削除できるようになります。";
     }
 }
 
@@ -131,7 +139,7 @@ function phbbs_get_form_html($thread, $state){
     $html .= cm\space_br('</label>', 4);
     $html .= cm\space_br('<input class="phbbs_password" type="password" name="password">', 5);
     if($state->edit === null && $state->delete === null){
-        $html .= cm\space_br('<p class="password">※パスワードを設定しておくと、後から削除できるようになります。</p>', 5);
+        $html .= cm\space_br('<p class="password">' . get_about_password($state) . '</p>', 5);
     }
     $html .= cm\space_br('</div>', 3);
     if(PHBBS_AUTH && $state->edit === null && $state->delete === null){
@@ -146,18 +154,34 @@ function phbbs_get_form_html($thread, $state){
 
 function get_description($state){
     $html = "";
-    if($state->edit === null){
-        if($state->delete === null){
-            $html .= cm\space_br("<p>作品の感想、アプリやゲームのバグ報告等あったらください。</p>", 3);
-            $html .= cm\space_br("<p>名前の後に #（半角シャープ）を追加し、任意の文字列を入れると、</p>", 3);
-            $html .= cm\space_br("<p>なりすまし防止用の暗号キーが追加されます（2ch でいう「トリ」です）。</p>", 3);
+    if($state->lang === 1){
+        if($state->edit === null){
+            if($state->delete === null){
+                $html .= cm\space_br("<p>Please post any report of any bug and review about my arts and products.</p>", 3);
+                $html .= cm\space_br("<p>If you want to prevent someone pretends to be you, type some word after '#'.</p>", 3);
+                $html .= cm\space_br("<p>It will turn into the specific alphanumerical that proves your identity.</p>", 3);
+            } else {
+                $html .= cm\space_br("<p>Type the password you posted.</p>", 3);
+                $html .= cm\space_br("<p>But a comment you delete cannot restore never agarin.</p>", 3);
+            }
         } else {
-            $html .= cm\space_br("<p>記事を削除するには、パスワードを入力してください。</p>", 3);
-            $html .= cm\space_br("<p>なお、一度削除したコメントは復元できません。</p>", 3);
+            $html .= cm\space_br("<p>Edit your name and comment then type the password you posted.</p>", 3);
         }
     } else {
-        $html .= cm\space_br("<p>内容を変更し、パスワードを入力してください。</p>", 3);
+        if($state->edit === null){
+            if($state->delete === null){
+                $html .= cm\space_br("<p>作品の感想、アプリやゲームのバグ報告等あったらください。</p>", 3);
+                $html .= cm\space_br("<p>名前の後に #（半角シャープ）を追加し、任意の文字列を入れると、</p>", 3);
+                $html .= cm\space_br("<p>なりすまし防止用の暗号キーが追加されます（2ch でいう「トリ」です）。</p>", 3);
+            } else {
+                $html .= cm\space_br("<p>記事を削除するには、パスワードを入力してください。</p>", 3);
+                $html .= cm\space_br("<p>なお、一度削除したコメントは復元できません。</p>", 3);
+            }
+        } else {
+            $html .= cm\space_br("<p>内容を変更し、パスワードを入力してください。</p>", 3);
+        }
     }
+
     return $html;
 }
 
