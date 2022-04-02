@@ -36,30 +36,34 @@ class GetComment extends Comment
     }
 
     function get_comment($de_links){
-        $html = cm\space_br('<div class="phbbs_comment">', 2);
-        $html .= cm\space_br('<hr>', 3);
-        $html .= cm\space_br('<p>', 3);
-        $html .= cm\space_br($this->id . ": ", 4);
-        $html .= cm\space_br('<span class="phbbs_name">' . $this->user . $this->cap . "</span>", 4);
-        $html .= cm\space_br($this->date_string, 4);
-        if($this->password !== "" && $de_links){
-            $path = cm\get_url_all();
-            $head = strpos($path, "?") === false ? "?" : "&";
+        if($this->password === "__DELETED__"){
+            return "";
+        } else {
+            $html = cm\space_br('<div class="phbbs_comment">', 2);
+            $html .= cm\space_br('<hr>', 3);
+            $html .= cm\space_br('<p>', 3);
+            $html .= cm\space_br($this->id . ": ", 4);
+            $html .= cm\space_br('<span class="phbbs_name">' . $this->user . $this->cap . "</span>", 4);
+            $html .= cm\space_br($this->date_string, 4);
+            if($this->password !== "" && $de_links){
+                $path = cm\get_url_all();
+                $head = strpos($path, "?") === false ? "?" : "&";
 //            $html .= cm\space_br('<a href="'. $path . $head . 'edit=' . $this->id . '">[編集]</a>', 4);
-            $html .= cm\space_br('<a href="'. $path . $head . 'delete=' . $this->id . '">[削除]</a>', 4);
+                $html .= cm\space_br('<a href="'. $path . $head . 'delete=' . $this->id . '">[削除]</a>', 4);
+            }
+            $html .= cm\space_br('</p>', 3);
+            $html .= cm\space_br('<div class="phbbs_text">', 3);
+            if($this->reply !== 0 && $this->reply !== ""){
+                $html .= cm\space_br('<p>>> ' . $this->reply . "</p>", 4);
+                $html .= cm\space_br('<p>　</p>', 4);
+            }
+            foreach ($this->text as $line){
+                $html .= cm\space_br("<p>" . $line . "</p>", 4);
+            }
+            $html .= cm\space_br('</div>', 3);
+            $html .= cm\space_br('</div>', 2);
+            return $html;
         }
-        $html .= cm\space_br('</p>', 3);
-        $html .= cm\space_br('<div class="phbbs_text">', 3);
-        if($this->reply !== 0 && $this->reply !== ""){
-            $html .= cm\space_br('<p>>> ' . $this->reply . "</p>", 4);
-            $html .= cm\space_br('<p>　</p>', 4);
-        }
-        foreach ($this->text as $line){
-            $html .= cm\space_br("<p>" . $line . "</p>", 4);
-        }
-        $html .= cm\space_br('</div>', 3);
-        $html .= cm\space_br('</div>', 2);
-        return $html;
     }
 
     function get_text(){

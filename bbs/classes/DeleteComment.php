@@ -30,11 +30,12 @@ class DeleteComment extends Comment
     function rewrite_log(){
         unlink($this->log);
         for($i = 0; $i < count($this->list); $i++){
-            if($i === $this->key){
-                continue;
-            } else {
-                error_log($this->list[$i], 3, $this->log);
-            }
+            error_log($this->list[$i], 3, $this->log);
+//            if($i === $this->key){
+//                continue;
+//            } else {
+//                error_log($this->list[$i], 3, $this->log);
+//            }
         }
     }
 
@@ -50,6 +51,12 @@ class DeleteComment extends Comment
         return false;
     }
 
+    function delete_password(){
+        $array = explode("<>", $this->list[$this->key]);
+        $array[11] = "__DELETED__";
+        $this->list[$this->key] = implode("<>", $array);
+    }
+
     function auth_delete(){
         if(file_exists($this->log)){
             $this->list = file($this->log);
@@ -62,6 +69,7 @@ class DeleteComment extends Comment
                 var_dump($exploded[11]);
                 var_dump($this->password);
                 if($exploded[11] === $this->password){
+                    $this->delete_password();
                     $this->rewrite_log();
                     $this->send_mail_deleted();
                 } else {

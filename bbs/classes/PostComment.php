@@ -87,11 +87,16 @@ class PostComment extends Comment
     }
 
     function send_mail_posted(){
-        $subject = "You got a new message at " . $this->thread . "!";
-        $msg = "Hi, dear my friend." . "\n";
-        $msg .= "You got a new message in your " . PHBBS_SITE_NAME . "'s " . $this->thread . " thread at " . $this->date . "." . "\n\n";
-        $msg .= "Subject: " . $this->user . "\n";
-        $msg .= "Message: " . $this->text;
+        $subject = "掲示板 " . PHBBS_SITE_NAME . " の " . $this->thread . " スレッドに書き込みがありました。";
+        $msg = $subject . "\n\n";
+        $msg .= "ユーザー名: " . $this->user . "\n";
+        $msg .= "メッセージ: " . $this->text . "\n";
+        $msg .= "投稿時間: " . $this->date;
+//        $subject = "You got a new message at " . $this->thread . "!";
+//        $msg = "Hi, dear my friend." . "\n";
+//        $msg .= "You got a new message in your " . PHBBS_SITE_NAME . "'s " . $this->thread . " thread at " . $this->date . "." . "\n\n";
+//        $msg .= "Subject: " . $this->user . "\n";
+//        $msg .= "Message: " . $this->text;
         mmm\send_mail($subject, $msg);
     }
 }
