@@ -252,6 +252,7 @@ function phbbs_get_html($str){
         if($state->edit === null && $state->delete === null){
             $html .= phbbs_get_comments_html($thread, $state);
         }
+        $html .= cm\space_br("<p class='phbbs_end_blank'>　</p>", 2);
         $html .= pia\pia_get_script_html(PHBBS_PIA_PATH);
 //    $html .= cm\space_br('<script src="' . PHBBS_PIA_PATH . 'main.js"></script>', 1);
         return $html;

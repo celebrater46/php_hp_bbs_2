@@ -104,6 +104,10 @@ p.phbbs_link_to_index{
     margin: 40px auto;
 }
 
+p.phbbs_end_blank{
+    height: 50px;
+}
+
 button#pia_regenerate{
     font-size: 1rem;
     color: #eeeeee;
