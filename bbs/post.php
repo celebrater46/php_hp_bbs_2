@@ -23,23 +23,23 @@ if(PHBBS_AUTH){
     check_auth($posted);
 } else {
     $posted->save_text();
-    header('Location: succeed.php?code=0');
+    header('Location: ' . modules\get_index_and_code() . '200');
     exit;
 }
 
 function check_auth($posted){
     $securimage = new Securimage();
     if(PHBBS_AVAILABLE === false){
-        header('Location: error.php?code=4');
+        header('Location: ' . modules\get_index_and_code() . '404');
     } else if(PHBBS_AUTH === false){
         $posted->save_text();
-        header('Location: succeed.php?code=0');
+        header('Location: ' . modules\get_index_and_code() . '200');
     } else if(isset($_POST['captcha_code'])) {
         if($securimage->check($_POST['captcha_code']) === true) {
             $posted->save_text();
-            header('Location: succeed.php?code=0');
+            header('Location: ' . modules\get_index_and_code() . '200');
         } else {
-            header('Location: error.php?code=3');
+            header('Location: ' . modules\get_index_and_code() . '403');
         }
     }
     exit;

@@ -4,9 +4,10 @@ namespace php_hp_bbs\bbs\classes;
 
 use fp_common_modules as cm;
 use my_micro_mailer as mmm;
+use php_hp_bbs\bbs\modules as modules;
 
-require_once ( dirname(__FILE__) . '/../../init.php');
-require_once ( dirname(__FILE__) . '/../modules/main.php');
+require_once dirname(__FILE__) . '/../../init.php';
+require_once dirname(__FILE__) . '/../modules/main.php';
 require_once PHBBS_HCM_PATH;
 require_once PHBBS_MMM_PATH;
 
@@ -19,10 +20,9 @@ class DeleteComment extends Comment
         $this->thread = cm\h($_POST["thread_name"]);
         $this->log = "lists/" . $this->thread . ".log";
         $this->id = isset($_GET["delete"]) ? (int)$_GET["delete"] : null;
-//        $this->id = isset($_POST["delete"]) ? (int)$_POST["delete"] : null;
         $this->password = cm\h($_POST["password"]);
         if($this->id === null){
-            header('Location: error.php?code=10');
+            header('Location: ' . modules\get_index_and_code() . '410');
             exit;
         }
     }
@@ -31,11 +31,6 @@ class DeleteComment extends Comment
         unlink($this->log);
         for($i = 0; $i < count($this->list); $i++){
             error_log($this->list[$i], 3, $this->log);
-//            if($i === $this->key){
-//                continue;
-//            } else {
-//                error_log($this->list[$i], 3, $this->log);
-//            }
         }
     }
 
@@ -62,7 +57,7 @@ class DeleteComment extends Comment
             $this->list = file($this->log);
             $this->key = $this->get_key();
             if($this->key === false){
-                header('Location: error.php?code=8');
+                header('Location: ' . modules\get_index_and_code() . '408');
                 exit;
             } else {
                 $exploded = explode("<>", $this->list[$this->key]);
@@ -73,12 +68,12 @@ class DeleteComment extends Comment
                     $this->rewrite_log();
                     $this->send_mail_deleted();
                 } else {
-                    header('Location: error.php?code=9');
+                    header('Location: ' . modules\get_index_and_code() . '409');
                     exit;
                 }
             }
         } else {
-            header('Location: error.php?code=7');
+            header('Location: ' . modules\get_index_and_code() . '407');
             exit;
         }
     }

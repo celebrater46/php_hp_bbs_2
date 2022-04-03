@@ -19,8 +19,8 @@ require_once PHBBS_HCM_PATH;
 //require_once PHBBS_PIA_PATH . "pia_init.php";
 require_once PHBBS_PIA_PATH . "pia_get_html.php";
 
-require_once( PHBBS_PNLG_PATH . 'init.php');
-require_once( PHBBS_PNLG_PATH . 'classes/NumberLink.php');
+require_once PHBBS_PNLG_PATH . 'init.php';
+require_once PHBBS_PNLG_PATH . 'classes/NumberLink.php';
 
 function get_comments($list, $thread){
     $array = [];
@@ -72,7 +72,9 @@ function get_comment_to_edit_delete($thread, $state){
                 return $comment;
             }
         }
-        header('Location: bbs/error.php?code=7');
+//        header('Location: bbs/error.php?code=7');
+//        $symbol = strpos("?", PHBBS_INDEX) === false ? "?" : "&";
+        header('Location: ' . modules\get_index_and_code() . '407');
         exit;
     }
     return null;
@@ -90,11 +92,11 @@ function get_word_in_button($state){
 
 function get_link_to($state){
     if($state->edit !== null){
-        return "edit.php?edit=" . $state->edit;
+        return "edit.php" . modules\get_url_parameter() . "&edit=" . $state->edit;
     } else if($state->delete !== null){
-        return "delete.php?delete=" . $state->delete;
+        return "delete.php" . modules\get_url_parameter() . "&delete=" . $state->delete;
     } else {
-        return "post.php";
+        return "post.php" . modules\get_url_parameter();
     }
 }
 
@@ -114,7 +116,7 @@ function phbbs_get_form_html($thread, $state){
     $text = $comment === null ? "" : implode("\n", $comment->text);
     $html = "";
     $html .= cm\space_br('<div class="phbbs_form_box">', 1);
-    $html .= cm\space_br('<form action="' . PHBBS_PATH . 'bbs/' . $link_to . '" method="post">', 2);
+    $html .= cm\space_br('<form action="' . PHBBS_HTTP_PATH . 'bbs/' . $link_to . '" method="post">', 2);
 
     if($state->delete !== null && $comment !== null){
         $html .= $comment->get_comment(false);
@@ -146,7 +148,7 @@ function phbbs_get_form_html($thread, $state){
         $html .= pia\pia_get_html(false, $state->lang, PHBBS_PIA_PATH);
     }
     $html .= cm\space_br('<input type="hidden" name="thread_name" value="' . $thread . '">', 3);
-    $html .= cm\space_br('<div class="phbbs_form"><button class="submit">' . $button_word . '</button></div>', 3);
+    $html .= cm\space_br('<div class="phbbs_form"><button class="phbbs_submit">' . $button_word . '</button></div>', 3);
     $html .= cm\space_br('</form>', 2);
     $html .= cm\space_br('</div>', 1);
     return $html;
@@ -185,15 +187,73 @@ function get_description($state){
     return $html;
 }
 
+function get_msg_jp($code){
+    switch ($code){
+        case 200: return "コメントの投稿に成功しました！";
+        case 201: return "コメントの削除に成功しました。";
+        case 401: return "投稿者名は 50 文字以内に収めてください。";
+        case 402: return "投稿できる文字数は最大で 2000 文字までです。";
+        case 403: return "認証用の英数字が正しくありません。";
+        case 404: return "ただいま投稿が一時的に制限されています。";
+        case 405: return "パスワードは半角英数字のみで入力してください。";
+        case 406: return "パスワードは半角英数字で 8 文字以上、大文字と小文字を両方使って入力してください。";
+        case 407: return "コメントファイルの読み込みに失敗しました。";
+        case 408: return "コメントファイルを読み込みましたが、データが見つかりませんでした。";
+        case 409: return "パスワードが間違っています。";
+        case 410: return "URL パラメータの値が不正です。";
+        default: return "不明なエラーが発生しました！";
+    }
+}
+
+function get_msg_en($code){
+    switch ($code){
+        case 200: return "Posted your comment successfully.";
+        case 201: return "Deleted your comment successfully.";
+        case 401: return "Cannot post a text over 50 characters.";
+        case 402: return "Cannot post a text over 2000 characters.";
+        case 403: return "Authentication failed because the code you typed was wrong.";
+        case 404: return "Post failed because of the administrator's inconvenience.";
+        case 405: return "Please type a password only half-width alphanumeric characters.";
+        case 406: return "Password must contain at least one uppercase letter, one lowercase letter and a number.";
+        case 407: return "Failed to load your comment.";
+        case 408: return "Not found your comment in the log.";
+        case 409: return "Password is wrong.";
+        case 410: return "URL parameter is invalid.";
+        default: return "Unknown error occurred!";
+    }
+}
+
+function get_h1($state){
+    if($state->code >= 400){
+        return $state->lang === 1 ? "ERROR" : "エラー";
+    } else if($state->code === 201){
+        return $state->lang === 1 ? "Delete Succeeded" : "削除成功";
+    } else if($state->code === 200){
+        return $state->lang === 1 ? "Post Succeeded" : "投稿成功";
+    }
+}
+
+function get_succeed_and_error_html($state){
+    $msg = $state->lang === 1 ? get_msg_en($state->code) : get_msg_jp($state->code);
+    $html = cm\space_br("<h2>" . get_h1($state) . ":</h2>", 1);
+    $html .= cm\space_br("<p>" . $msg . "</p>", 1);
+    $html .= cm\space_br('<p class="phbbs_link_to_index"><a href="' . PHBBS_INDEX . modules\get_url_parameter($state) . '">- ' . ($state->lang === 1 ? "BACK" : "戻る") . ' -</a></p>', 1);
+    return $html;
+}
+
 function phbbs_get_html($str){
     $state = new State();
-    $thread = $str ?? PHBBS_DEFAULT_THREAD;
-    $html = get_description($state);
-    $html .= phbbs_get_form_html($thread, $state);
-    if($state->edit === null && $state->delete === null){
-        $html .= phbbs_get_comments_html($thread, $state);
-    }
-    $html .= pia\pia_get_script_html(PHBBS_PIA_PATH);
+    if($state->code >= 200){
+        return get_succeed_and_error_html($state);
+    } else {
+        $thread = $str ?? PHBBS_DEFAULT_THREAD;
+        $html = get_description($state);
+        $html .= phbbs_get_form_html($thread, $state);
+        if($state->edit === null && $state->delete === null){
+            $html .= phbbs_get_comments_html($thread, $state);
+        }
+        $html .= pia\pia_get_script_html(PHBBS_PIA_PATH);
 //    $html .= cm\space_br('<script src="' . PHBBS_PIA_PATH . 'main.js"></script>', 1);
-    return $html;
+        return $html;
+    }
 }

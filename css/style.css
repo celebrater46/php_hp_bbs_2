@@ -100,6 +100,10 @@ p.pnlg_links{
     border-top: 1px solid gray;
 }
 
+p.phbbs_link_to_index{
+    margin: 40px auto;
+}
+
 button#pia_regenerate{
     font-size: 1rem;
     color: #eeeeee;
@@ -108,7 +112,7 @@ button#pia_regenerate{
     margin: 10px auto 0;
 }
 
-button.submit{
+button.phbbs_submit{
     font-size: 1rem;
     color: #eeeeee;
     background-color: #333333;
@@ -144,7 +148,7 @@ button.submit{
         margin: 10px auto;
     }
 
-    button.submit{
+    button.phbbs_submit{
         margin: 10px auto;
     }
 

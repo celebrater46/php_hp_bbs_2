@@ -4,6 +4,7 @@ namespace php_hp_bbs\bbs\classes;
 
 use fp_common_modules as cm;
 
+require_once dirname(__FILE__) . '/../../init.php';
 require_once PHBBS_HCM_PATH;
 
 class GetComment extends Comment
@@ -78,7 +79,7 @@ class GetComment extends Comment
     }
 
     function get_text(){
-        $path = "bbs/comments/" . $this->thread . "/" . $this->id . ".txt";
+        $path = PHBBS_PATH . "bbs/comments/" . $this->thread . "/" . $this->id . ".txt";
         if(file_exists($path)){
             $temp = file($path);
             foreach ($temp as $line){
