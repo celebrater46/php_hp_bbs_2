@@ -27,11 +27,13 @@ function get_comments($list, $thread){
     foreach ($list as $line){
         array_push($array, new GetComment($line, $thread));
     }
+//    var_dump($array);
     return $array;
 }
 
 function phbbs_get_comments_html($thread, $state){
     $list = modules\get_list($thread);
+//    var_dump($list);
     if($list !== null){
         $comments = get_comments($list, $thread);
         $comments_num = count($comments);
