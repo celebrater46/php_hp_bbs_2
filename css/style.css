@@ -81,12 +81,12 @@ span.phbbs_name{
 }
 
 input.phbbs_comment{
-    width: 720px;
+    width: 640px;
 }
 
 textarea.phbbs_comment{
-    width: 720px;
-    height: 500px;
+    width: 640px;
+    height: 400px;
 }
 
 p.password{

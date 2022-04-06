@@ -11,6 +11,9 @@ define('PHBBS_MULTH_PAGE_MODE', false); // 複数のスレッドを使用する�
 define('PHBBS_AVAILABLE', true); // 投稿許可（false で投稿を一時的に制限）
 define('PHBBS_MAX_COMMENTS', 10); // 1ページあたりのコメント表示数
 define("PHBBS_AUTH", true); // Securimage による画像認証を使用するか
+define("PHBBS_ERROR_MESSAGE", false); // 開発用のエラーメッセージを表示するか
+define("PHBBS_AUTO_CREATE_LIST_AND_DIR", true); // 存在しないスレッド名が phbbs_get_html() に渡された時にリストとディレクトリを自動生成するか（ブログコメント用）
+define("PHBBS_DESCRIPTION", false); // 投稿フォーム上の説明事項を表示するか
 define("PHBBS_FCM_PATH", '/home/enin-world/www/php/fp_common_modules/');
 define("PHBBS_PIA_PATH", PHBBS_FCM_PATH . 'php_img_auth/'); // php_img_auth
 define("PHBBS_PNLG_PATH", PHBBS_FCM_PATH . 'php_number_link_generator_2/'); // php_number_link_generator

@@ -12,7 +12,13 @@ function get_list($thread){
     if(file_exists($txt)){
         return file($txt);
     } else {
-        echo "NOT FOUND: " . $txt;
+        $thread_dir = PHBBS_PATH . "bbs/comments/" . $thread;
+        if(PHBBS_AUTO_CREATE_LIST_AND_DIR && file_exists($thread_dir) === false){
+            mkdir($thread_dir, 0604);
+        }
+        if(PHBBS_ERROR_MESSAGE){
+            echo "NOT FOUND: " . $txt;
+        }
         return null;
     }
 }

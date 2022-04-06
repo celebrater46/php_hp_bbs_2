@@ -32,24 +32,28 @@ function get_comments($list, $thread){
 
 function phbbs_get_comments_html($thread, $state){
     $list = modules\get_list($thread);
-    $comments = get_comments($list, $thread);
-    $comments_num = count($comments);
-    $link = new NumberLink($comments_num, PHBBS_MAX_COMMENTS);
-    rsort($comments); // reverse the order of the list
-    $html = "";
-    $start_comment = ($state->page - 1) * PHBBS_MAX_COMMENTS;
-    $end_comment = $state->page * PHBBS_MAX_COMMENTS;
-    for($i = $start_comment; $i < $end_comment; $i++){
-        if(isset($comments[$i])){
-            $html .= $comments[$i]->get_comment(true);
+    if($list !== null){
+        $comments = get_comments($list, $thread);
+        $comments_num = count($comments);
+        $link = new NumberLink($comments_num, PHBBS_MAX_COMMENTS);
+        rsort($comments); // reverse the order of the list
+        $html = "";
+        $start_comment = ($state->page - 1) * PHBBS_MAX_COMMENTS;
+        $end_comment = $state->page * PHBBS_MAX_COMMENTS;
+        for($i = $start_comment; $i < $end_comment; $i++){
+            if(isset($comments[$i])){
+                $html .= $comments[$i]->get_comment(true);
+            }
         }
+        if(PHBBS_MAX_COMMENTS < $comments_num){
+            $parameters = "";
+    //        $html .= cm\space_br('<p class="number_link">', )
+            $html .= $link->get_page_links_html($parameters);
+        }
+        return $html;
+    } else {
+        return "";
     }
-    if(PHBBS_MAX_COMMENTS < $comments_num){
-        $parameters = "";
-//        $html .= cm\space_br('<p class="number_link">', )
-        $html .= $link->get_page_links_html($parameters);
-    }
-    return $html;
 }
 
 function get_id_edit_or_delete($state){
@@ -247,7 +251,10 @@ function phbbs_get_html($str){
         return get_succeed_and_error_html($state);
     } else {
         $thread = $str ?? PHBBS_DEFAULT_THREAD;
-        $html = get_description($state);
+        $html = "";
+        if(PHBBS_DESCRIPTION){
+            $html = get_description($state);
+        }
         $html .= phbbs_get_form_html($thread, $state);
         if($state->edit === null && $state->delete === null){
             $html .= phbbs_get_comments_html($thread, $state);
