@@ -21,6 +21,7 @@ class Comment
     protected $password; // コメント編集ないし削除用
     public $len;
     protected $log;
+    public $another_index;
 
     function get_id(){
         $list = file($this->log);

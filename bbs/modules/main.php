@@ -14,7 +14,7 @@ function get_list($thread){
     } else {
         $thread_dir = PHBBS_PATH . "bbs/comments/" . $thread;
         if(PHBBS_AUTO_CREATE_LIST_AND_DIR && file_exists($thread_dir) === false){
-            mkdir($thread_dir, 0604);
+            mkdir($thread_dir, 0705);
         }
         if(PHBBS_ERROR_MESSAGE){
             echo "NOT FOUND: " . $txt;

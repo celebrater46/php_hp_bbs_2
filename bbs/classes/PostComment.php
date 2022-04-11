@@ -13,8 +13,6 @@ require_once "State.php";
 
 class PostComment extends Comment
 {
-    public $another_index;
-
     function __construct(){
         $this->name_full = cm\h($_POST["name"]);
         $this->thread = cm\h($_POST["thread_name"]);

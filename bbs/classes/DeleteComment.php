@@ -25,6 +25,7 @@ class DeleteComment extends Comment
             header('Location: ' . modules\get_index_and_code("") . '410');
             exit;
         }
+        $this->another_index = $_POST["another_index"] ?? "";
     }
 
     function rewrite_log(){
