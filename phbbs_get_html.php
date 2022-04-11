@@ -16,7 +16,6 @@ require_once "bbs/classes/Comment.php";
 require_once "bbs/classes/GetComment.php";
 require_once "bbs/classes/State.php";
 require_once PHBBS_HCM_PATH;
-//require_once PHBBS_PIA_PATH . "pia_init.php";
 require_once PHBBS_PIA_PATH . "pia_get_html.php";
 
 require_once PHBBS_PNLG_PATH . 'init.php';
@@ -27,13 +26,11 @@ function get_comments($list, $thread){
     foreach ($list as $line){
         array_push($array, new GetComment($line, $thread));
     }
-//    var_dump($array);
     return $array;
 }
 
 function phbbs_get_comments_html($thread, $state){
     $list = modules\get_list($thread);
-//    var_dump($list);
     if($list !== null){
         $comments = get_comments($list, $thread);
         $comments_num = count($comments);
@@ -49,7 +46,6 @@ function phbbs_get_comments_html($thread, $state){
         }
         if(PHBBS_MAX_COMMENTS < $comments_num){
             $parameters = "";
-    //        $html .= cm\space_br('<p class="number_link">', )
             $html .= $link->get_page_links_html($parameters, PHBBS_INDEX);
         }
         return $html;
@@ -78,8 +74,6 @@ function get_comment_to_edit_delete($thread, $state){
                 return $comment;
             }
         }
-//        header('Location: bbs/error.php?code=7');
-//        $symbol = strpos("?", PHBBS_INDEX) === false ? "?" : "&";
         header('Location: ' . modules\get_index_and_code("") . '407');
         exit;
     }
@@ -281,7 +275,6 @@ function phbbs_get_html($str, $another_index){
         }
         $html .= cm\space_br("<p class='phbbs_end_blank'>　</p>", 2);
         $html .= pia\pia_get_script_html(PHBBS_PIA_PATH);
-//    $html .= cm\space_br('<script src="' . PHBBS_PIA_PATH . 'main.js"></script>', 1);
         return $html;
     }
 }
