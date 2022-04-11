@@ -13,6 +13,8 @@ require_once "State.php";
 
 class PostComment extends Comment
 {
+    public $another_index;
+
     function __construct(){
         $this->name_full = cm\h($_POST["name"]);
         $this->thread = cm\h($_POST["thread_name"]);
@@ -30,6 +32,7 @@ class PostComment extends Comment
         $this->mail = "";
         $this->ip = $_SERVER['REMOTE_ADDR'];
         $this->password = cm\h($_POST["password"]);
+        $this->another_index = $_POST["another_index"] ?? "";
     }
 
     function get_line(){

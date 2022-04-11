@@ -40,16 +40,16 @@ function check_password($password){
 
 function check_posted_data($posted){
     if(mb_strlen($posted->user, "UTF-8") > 50){
-        header('Location: ' . get_index_and_code() . '401');
+        header('Location: ' . get_index_and_code("") . '401');
         exit;
     } else if($posted->len > 2000){
-        header('Location: ' . get_index_and_code() . '402');
+        header('Location: ' . get_index_and_code("") . '402');
         exit;
     } else if(preg_match('/[!#<>:;&~@%+$"\'\*\^\(\)\[\]\|\/\.,_-]+/', $_POST["password"])){
-        header('Location: ' . get_index_and_code() . '405');
+        header('Location: ' . get_index_and_code("") . '405');
         exit;
     } else if($_POST["password"] !== "" && check_password($_POST["password"]) === false){
-        header('Location: ' . get_index_and_code() . '406');
+        header('Location: ' . get_index_and_code("") . '406');
         exit;
     }
 }
@@ -59,6 +59,6 @@ function get_url_parameter(){
     return "?lang=" . $state->lang . "&mode=" . $state->mode;
 }
 
-function get_index_and_code(){
-    return PHBBS_INDEX . get_url_parameter() . '&code=';
+function get_index_and_code($another_index){
+    return ($another_index === "" ? PHBBS_INDEX : $another_index) . get_url_parameter() . '&code=';
 }

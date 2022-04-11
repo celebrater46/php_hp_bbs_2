@@ -12,5 +12,5 @@ require_once("modules/main.php");
 
 $comment = new DeleteComment();
 $comment->auth_delete();
-header('Location: ' . modules\get_index_and_code() . '201');
+header('Location: ' . modules\get_index_and_code("") . '201');
 exit;

@@ -23,23 +23,23 @@ if(PHBBS_AUTH){
     check_auth($posted);
 } else {
     $posted->save_text();
-    header('Location: ' . modules\get_index_and_code() . '200');
+    header('Location: ' . modules\get_index_and_code($posted->another_index) . '200');
     exit;
 }
 
 function check_auth($posted){
     $securimage = new Securimage();
     if(PHBBS_AVAILABLE === false){
-        header('Location: ' . modules\get_index_and_code() . '404');
+        header('Location: ' . modules\get_index_and_code($posted->another_index) . '404');
     } else if(PHBBS_AUTH === false){
         $posted->save_text();
-        header('Location: ' . modules\get_index_and_code() . '200');
+        header('Location: ' . modules\get_index_and_code($posted->another_index) . '200');
     } else if(isset($_POST['captcha_code'])) {
         if($securimage->check($_POST['captcha_code']) === true) {
             $posted->save_text();
-            header('Location: ' . modules\get_index_and_code() . '200');
+            header('Location: ' . modules\get_index_and_code($posted->another_index) . '200');
         } else {
-            header('Location: ' . modules\get_index_and_code() . '403');
+            header('Location: ' . modules\get_index_and_code($posted->another_index) . '403');
         }
     }
     exit;

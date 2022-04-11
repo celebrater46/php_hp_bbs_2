@@ -50,7 +50,7 @@ function phbbs_get_comments_html($thread, $state){
         if(PHBBS_MAX_COMMENTS < $comments_num){
             $parameters = "";
     //        $html .= cm\space_br('<p class="number_link">', )
-            $html .= $link->get_page_links_html($parameters);
+            $html .= $link->get_page_links_html($parameters, PHBBS_INDEX);
         }
         return $html;
     } else {
@@ -80,7 +80,7 @@ function get_comment_to_edit_delete($thread, $state){
         }
 //        header('Location: bbs/error.php?code=7');
 //        $symbol = strpos("?", PHBBS_INDEX) === false ? "?" : "&";
-        header('Location: ' . modules\get_index_and_code() . '407');
+        header('Location: ' . modules\get_index_and_code("") . '407');
         exit;
     }
     return null;
@@ -114,15 +114,15 @@ function get_about_password($state){
     }
 }
 
-function phbbs_get_form_html($thread, $state){
+function phbbs_get_form_html($thread, $state, $another_index){
     $comment = get_comment_to_edit_delete($thread, $state);
     $button_word = get_word_in_button($state);
     $link_to = get_link_to($state);
     $name = $comment === null ? "" : $comment->get_name_full();
     $text = $comment === null ? "" : implode("\n", $comment->text);
-    $html = "";
-    $html .= cm\space_br('<div class="phbbs_form_box">', 1);
-    $html .= cm\space_br('<form action="' . PHBBS_HTTP_PATH . 'bbs/' . $link_to . '" method="post">', 2);
+    $url = PHBBS_HTTP_PATH . 'bbs/' . $link_to;
+    $html = cm\space_br('<div class="phbbs_form_box">', 1);
+    $html .= cm\space_br('<form action="' . $url . '" method="post">', 2);
 
     if($state->delete !== null && $comment !== null){
         $html .= $comment->get_comment(false);
@@ -146,6 +146,7 @@ function phbbs_get_form_html($thread, $state){
     $html .= cm\space_br('<span class="phbbs_form">' . ($state->lang === 1 ? "Password" : "パスワード") . '：</span>', 5);
     $html .= cm\space_br('</label>', 4);
     $html .= cm\space_br('<input class="phbbs_password" type="password" name="password">', 5);
+    $html .= $another_index === "" ? "" : cm\space_br('<input type="hidden" name="another_index" value="' . $another_index . '">', 5);
     if($state->edit === null && $state->delete === null){
         $html .= cm\space_br('<p class="password">' . get_about_password($state) . '</p>', 5);
     }
@@ -239,15 +240,32 @@ function get_h1($state){
     }
 }
 
+function get_h1_only_code($code){
+    if($code >= 400){
+        return "エラー";
+    } else if($code === 201){
+        return "削除成功";
+    } else if($code === 200){
+        return "投稿成功";
+    }
+}
+
 function get_succeed_and_error_html($state){
     $msg = $state->lang === 1 ? get_msg_en($state->code) : get_msg_jp($state->code);
     $html = cm\space_br("<h2>" . get_h1($state) . ":</h2>", 1);
     $html .= cm\space_br("<p>" . $msg . "</p>", 1);
-    $html .= cm\space_br('<p class="phbbs_link_to_index"><a href="' . PHBBS_INDEX . modules\get_url_parameter($state) . '">- ' . ($state->lang === 1 ? "BACK" : "戻る") . ' -</a></p>', 1);
+    $html .= cm\space_br('<p class="phbbs_link_to_index"><a href="' . PHBBS_INDEX . modules\get_url_parameter() . '">- ' . ($state->lang === 1 ? "BACK" : "戻る") . ' -</a></p>', 1);
     return $html;
 }
 
-function phbbs_get_html($str){
+function phbbs_get_result_from_code($code){
+    $msg = get_msg_jp($code);
+    $html = cm\space_br("<h2>" . get_h1_only_code($code) . ":</h2>", 1);
+    $html .= cm\space_br("<p>" . $msg . "</p>", 1);
+    return $html;
+}
+
+function phbbs_get_html($str, $another_index){
     $state = new State();
     if($state->code >= 200){
         return get_succeed_and_error_html($state);
@@ -257,7 +275,7 @@ function phbbs_get_html($str){
         if(PHBBS_DESCRIPTION){
             $html = get_description($state);
         }
-        $html .= phbbs_get_form_html($thread, $state);
+        $html .= phbbs_get_form_html($thread, $state, $another_index);
         if($state->edit === null && $state->delete === null){
             $html .= phbbs_get_comments_html($thread, $state);
         }

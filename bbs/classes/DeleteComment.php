@@ -22,7 +22,7 @@ class DeleteComment extends Comment
         $this->id = isset($_GET["delete"]) ? (int)$_GET["delete"] : null;
         $this->password = cm\h($_POST["password"]);
         if($this->id === null){
-            header('Location: ' . modules\get_index_and_code() . '410');
+            header('Location: ' . modules\get_index_and_code("") . '410');
             exit;
         }
     }
@@ -57,7 +57,7 @@ class DeleteComment extends Comment
             $this->list = file($this->log);
             $this->key = $this->get_key();
             if($this->key === false){
-                header('Location: ' . modules\get_index_and_code() . '408');
+                header('Location: ' . modules\get_index_and_code("") . '408');
                 exit;
             } else {
                 $exploded = explode("<>", $this->list[$this->key]);
@@ -68,12 +68,12 @@ class DeleteComment extends Comment
                     $this->rewrite_log();
                     $this->send_mail_deleted();
                 } else {
-                    header('Location: ' . modules\get_index_and_code() . '409');
+                    header('Location: ' . modules\get_index_and_code("") . '409');
                     exit;
                 }
             }
         } else {
-            header('Location: ' . modules\get_index_and_code() . '407');
+            header('Location: ' . modules\get_index_and_code("") . '407');
             exit;
         }
     }
